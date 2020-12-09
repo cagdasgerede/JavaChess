@@ -2,14 +2,9 @@ package pl.nogacz.chess.application.menu;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import pl.nogacz.chess.board.Board;
-import pl.nogacz.chess.application.menu.EndGame;
 import java.util.Optional;
+import pl.nogacz.chess.board.Board;
 
-/**
- *
- * @author : Doğukan Doğru on 07.12.2020
- */
 
 public class GameMode {
     private EndGame endGame = new EndGame("Game mode changed.");
