@@ -20,6 +20,8 @@ import pl.nogacz.chess.pawns.PawnClass;
  * @author Dawid Nogacz on 01.05.2019
  */
 public class Design {
+    private static final int BUTTON_WIDTH = 100;
+    private static final int BUTTON_HEIGHT = 20;
     private static BorderPane borderPane = new BorderPane();
     private static GridPane gridPane = new GridPane();
     private VBox vBox = new VBox();
@@ -102,7 +104,7 @@ public class Design {
         author.setOnMouseClicked(event -> new AuthorInfo());
 
         Button gameMode = new Button("Game Mode");
-        gameMode.setPrefSize(100, 20);
+        gameMode.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         gameMode.setOnMouseClicked(event -> new GameMode());
 
         Button exitGame = new Button("Exit game");
