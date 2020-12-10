@@ -287,6 +287,14 @@ public class Board {
         }
     }
 
+    public static int whoseTurn(){
+        if(isWhitesTurn && !isBlacksTurn)
+            return 1;
+        else if(!isWhitesTurn && isBlacksTurn)
+            return 0;
+        return -1;
+    }
+
     public void endOfGameForPlayerVsPlayer(GameLogic gameLogic){
         if(isWhitesTurn && !isBlacksTurn){
             if(gameLogic.isKingChecked(PawnColor.BLACK)) {
@@ -331,8 +339,7 @@ public class Board {
 
                 checkPromote(eventCoordinates, 0);
 
-                isBlacksTurn = true;
-                isWhitesTurn = false;
+                changeTurn();
             } else if(isFieldNotNull(eventCoordinates) && Board.getPawn(eventCoordinates).getColor().isWhite() && isPossibleSelect(eventCoordinates, PawnColor.WHITE)) {
                 possibleMovePromote.clear();
                 possibleKickPromote.clear();
@@ -366,8 +373,7 @@ public class Board {
 
                 checkPromote(eventCoordinates, 0);
 
-                isBlacksTurn = false;
-                isWhitesTurn = true;
+                changeTurn();
             } else if(isFieldNotNull(eventCoordinates) && Board.getPawn(eventCoordinates).getColor().isBlack() && isPossibleSelect(eventCoordinates, PawnColor.BLACK)) {
                 possibleMovePromote.clear();
                 possibleKickPromote.clear();
@@ -379,6 +385,11 @@ public class Board {
                 lightSelect(eventCoordinates);
             }
         }
+    }
+
+    public static void changeTurn(){
+        isWhitesTurn = !isWhitesTurn;
+        isBlacksTurn = !isBlacksTurn;
     }
 
     public void playerVsPlayer(MouseEvent event){
@@ -393,6 +404,10 @@ public class Board {
     public static void setGameMode(int gameModeInteger){
         if(gameModeInteger == 0) gameMode = PLAYER_VS_PLAYER;
         if(gameModeInteger == 1) gameMode = PLAYER_VS_COMPUTER;
+    }
+
+    public static String getGameMode(){
+        return gameMode;
     }
 
     public void readKeyboard(KeyEvent event) {
