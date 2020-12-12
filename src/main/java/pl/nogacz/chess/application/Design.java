@@ -4,6 +4,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,6 +14,7 @@ import pl.nogacz.chess.application.menu.Difficulty;
 import pl.nogacz.chess.application.menu.EndGame;
 import pl.nogacz.chess.application.menu.Statistics;
 import pl.nogacz.chess.application.menu.GameMode;
+import pl.nogacz.chess.board.Board;
 import pl.nogacz.chess.board.Coordinates;
 import pl.nogacz.chess.pawns.PawnClass;
 
@@ -22,12 +24,15 @@ import pl.nogacz.chess.pawns.PawnClass;
 public class Design {
     private static final int BUTTON_WIDTH = 100;
     private static final int BUTTON_HEIGHT = 20;
+    private static final int LABEL_WIDTH = 380;
+    private static final int LABEL_HEIGHT = 20;
     private static BorderPane borderPane = new BorderPane();
     private static GridPane gridPane = new GridPane();
     private VBox vBox = new VBox();
     private static TextArea textArea = new TextArea();
     private HBox hBox = new HBox();
     private static Image lightMove = new Image(Resources.getPath("light.png"));
+    public static Label gameModeLabel = new Label();
 
     public Design() {
         createBoardBackground();
@@ -88,19 +93,19 @@ public class Design {
 
     public void createTopMenu() {
         Button newGame = new Button("New game");
-        newGame.setPrefSize(100, 20);
+        newGame.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         newGame.setOnMouseClicked(event -> new EndGame("").newGame());
 
         Button difficulty = new Button("Difficulty");
-        difficulty.setPrefSize(100, 20);
+        difficulty.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         difficulty.setOnMouseClicked(event -> new Difficulty());
 
         Button statistics = new Button("Statistics");
-        statistics.setPrefSize(100, 20);
+        statistics.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         statistics.setOnMouseClicked(event -> new Statistics().printInfo());
 
         Button author = new Button("Author");
-        author.setPrefSize(100, 20);
+        author.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         author.setOnMouseClicked(event -> new AuthorInfo());
 
         Button gameMode = new Button("Game Mode");
@@ -108,10 +113,18 @@ public class Design {
         gameMode.setOnMouseClicked(event -> new GameMode());
 
         Button exitGame = new Button("Exit game");
-        exitGame.setPrefSize(100, 20);
+        exitGame.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         exitGame.setOnMouseClicked(event -> System.exit(0));
 
-        hBox.getChildren().addAll(newGame, difficulty, statistics, author, gameMode, exitGame);
+        gameModeLabel.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
+        gameModeLabel.setText("Game Mode: Player Vs Computer");
+
+        hBox.getChildren().addAll(newGame, difficulty, statistics, author, gameMode, exitGame, gameModeLabel);
+    }
+
+    public static void refreshGameModeLabel(){
+        if(Board.getGameMode().equals(Board.PLAYER_VS_COMPUTER)) gameModeLabel.setText("Game Mode: Player Vs Computer");
+        else if(Board.getGameMode().equals(Board.PLAYER_VS_PLAYER)) gameModeLabel.setText("Game Mode: Player Vs Player");
     }
 
     public static void addPawn(Coordinates coordinates, PawnClass pawn) {

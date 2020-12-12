@@ -19,12 +19,31 @@ public class TurnMechanismTest {
 
     @Test
     public void isGameModePlayerVsComputerAtStartup(){
-        assertEquals("playerVsComputer", Board.getGameMode());
+        assertEquals(Board.PLAYER_VS_COMPUTER, Board.getGameMode());
     }
 
     @Test
     public void isGameModeChanging(){
-        Board.setGameMode(0);
-        assertEquals("playerVsPlayer", Board.getGameMode());
+        Board.setGameMode(Board.PLAYER_VS_PLAYER);
+        assertEquals(Board.PLAYER_VS_PLAYER, Board.getGameMode());
+    }
+
+    @Test
+    public void isGameModeCanTurnToPlayerVsComputer(){
+        Board.setGameMode(Board.PLAYER_VS_PLAYER);
+        Board.setGameMode(Board.PLAYER_VS_COMPUTER);
+        assertEquals(Board.PLAYER_VS_COMPUTER, Board.getGameMode());
+    }
+
+    @Test
+    public void isWaitingForPlayer(){
+        Board.setGameMode(Board.PLAYER_VS_PLAYER);
+        try{
+            Thread.sleep(3);
+        }
+        catch(InterruptedException e){
+            System.out.println(e);
+        }
+        assertEquals(Board.PLAYER_VS_PLAYER, Board.getGameMode());
     }
 }

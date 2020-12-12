@@ -3,6 +3,8 @@ package pl.nogacz.chess.application.menu;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import java.util.Optional;
+
+import pl.nogacz.chess.application.Design;
 import pl.nogacz.chess.board.Board;
 
 
@@ -23,10 +25,12 @@ public class GameMode {
 
         if (result.get() == playerVsComputer){
             endGame.newGame();
-            Board.setGameMode(1);
+            Board.setGameMode(Board.PLAYER_VS_COMPUTER);
+            Design.refreshGameModeLabel();
         } else if (result.get() == playerVsPlayer){
             endGame.newGame();
-            Board.setGameMode(0);
+            Board.setGameMode(Board.PLAYER_VS_PLAYER);
+            Design.refreshGameModeLabel();
         }
     }
 }

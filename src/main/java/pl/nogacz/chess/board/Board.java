@@ -32,8 +32,8 @@ public class Board {
     private GameLogic gameLogic = new GameLogic();
     private boolean isGameEnd = false;
 
-    private static final String PLAYER_VS_PLAYER = "playerVsPlayer";
-    private static final String PLAYER_VS_COMPUTER = "playerVsComputer";
+    public static final String PLAYER_VS_PLAYER = "playerVsPlayer";
+    public static final String PLAYER_VS_COMPUTER = "playerVsComputer";
     private static String gameMode = PLAYER_VS_COMPUTER;
     private static boolean isWhitesTurn = true;
     private static boolean isBlacksTurn = false;
@@ -115,6 +115,7 @@ public class Board {
     }
 
     public void readMouseEvent(MouseEvent event) {
+        System.out.println(event);
         if(gameMode == PLAYER_VS_PLAYER){
             playerVsPlayer(event);
         }
@@ -228,7 +229,7 @@ public class Board {
 
         } else {
             if(isPieceSelected) {
-                movePieceForPlayerVsPlayer(eventCoordinates);
+                movePieceForPlayerVsPlayerWhitesTurn(eventCoordinates);
             } else {
                 if(isFieldNotNull(eventCoordinates)) {
                     if(Board.getPawn(eventCoordinates).getColor().isBlack()) {
@@ -267,7 +268,7 @@ public class Board {
             endOfGameForPlayerVsPlayer(gameLogic);
         } else {
             if(isPieceSelected) {
-                movePieceForPlayerVsPlayer(eventCoordinates);
+                movePieceForPlayerVsPlayerBlacksTurn(eventCoordinates);
             } else {
                 if(isFieldNotNull(eventCoordinates)) {
                     if(Board.getPawn(eventCoordinates).getColor().isWhite()) {
@@ -316,74 +317,74 @@ public class Board {
         }
     }
 
-    public void movePieceForPlayerVsPlayer(Coordinates eventCoordinates){
-        if(isWhitesTurn && !isBlacksTurn){
-            if(eventCoordinates.equals(selectedCoordinates)) {
-                selectedCoordinates = null;
-                isPieceSelected = false;
+    public void movePieceForPlayerVsPlayerBlacksTurn(Coordinates eventCoordinates){
+        if(eventCoordinates.equals(selectedCoordinates)) {
+            selectedCoordinates = null;
+            isPieceSelected = false;
 
-                unLightSelect(eventCoordinates);
+            unLightSelect(eventCoordinates);
 
-                if(isKingChecked) {
-                    possiblePawnIfKingIsChecked.forEach(this::lightPawn);
-                }
-            } else if(isPossibleMove(eventCoordinates)) {
-                unLightSelect(selectedCoordinates);
-                movePawn(selectedCoordinates, eventCoordinates);
-
-                chessNotation.addMovement(selectedCoordinates, eventCoordinates, getPawn(eventCoordinates), possibleKick.contains(eventCoordinates));
-
-                selectedCoordinates = null;
-                isPieceSelected = false;
-                isKingChecked = false;
-
-                checkPromote(eventCoordinates, 0);
-
-                changeTurn();
-            } else if(isFieldNotNull(eventCoordinates) && Board.getPawn(eventCoordinates).getColor().isWhite() && isPossibleSelect(eventCoordinates, PawnColor.WHITE)) {
-                possibleMovePromote.clear();
-                possibleKickPromote.clear();
-
-                unLightSelect(selectedCoordinates);
-
-                selectedCoordinates = eventCoordinates;
-                isPieceSelected = true;
-                lightSelect(eventCoordinates);
+            if(isKingChecked) {
+                possiblePawnIfKingIsChecked.forEach(this::lightPawn);
             }
+        } else if(isPossibleMove(eventCoordinates)) {
+            unLightSelect(selectedCoordinates);
+            movePawn(selectedCoordinates, eventCoordinates);
+
+            chessNotation.addMovement(selectedCoordinates, eventCoordinates, getPawn(eventCoordinates), possibleKick.contains(eventCoordinates));
+
+            selectedCoordinates = null;
+            isPieceSelected = false;
+            isKingChecked = false;
+
+            checkPromote(eventCoordinates, 0);
+
+            changeTurn();
+        } else if(isFieldNotNull(eventCoordinates) && Board.getPawn(eventCoordinates).getColor().isBlack() && isPossibleSelect(eventCoordinates, PawnColor.BLACK)) {
+            possibleMovePromote.clear();
+            possibleKickPromote.clear();
+
+            unLightSelect(selectedCoordinates);
+
+            selectedCoordinates = eventCoordinates;
+            isPieceSelected = true;
+            lightSelect(eventCoordinates);
         }
-        else if(!isWhitesTurn && isBlacksTurn){
-            if(eventCoordinates.equals(selectedCoordinates)) {
-                selectedCoordinates = null;
-                isPieceSelected = false;
+        chessNotation.saveRound();
+    }
 
-                unLightSelect(eventCoordinates);
+    public void movePieceForPlayerVsPlayerWhitesTurn(Coordinates eventCoordinates){
+        if(eventCoordinates.equals(selectedCoordinates)) {
+            selectedCoordinates = null;
+            isPieceSelected = false;
 
-                if(isKingChecked) {
-                    possiblePawnIfKingIsChecked.forEach(this::lightPawn);
-                }
-            } else if(isPossibleMove(eventCoordinates)) {
-                unLightSelect(selectedCoordinates);
-                movePawn(selectedCoordinates, eventCoordinates);
+            unLightSelect(eventCoordinates);
 
-                chessNotation.addMovement(selectedCoordinates, eventCoordinates, getPawn(eventCoordinates), possibleKick.contains(eventCoordinates));
-
-                selectedCoordinates = null;
-                isPieceSelected = false;
-                isKingChecked = false;
-
-                checkPromote(eventCoordinates, 0);
-
-                changeTurn();
-            } else if(isFieldNotNull(eventCoordinates) && Board.getPawn(eventCoordinates).getColor().isBlack() && isPossibleSelect(eventCoordinates, PawnColor.BLACK)) {
-                possibleMovePromote.clear();
-                possibleKickPromote.clear();
-
-                unLightSelect(selectedCoordinates);
-
-                selectedCoordinates = eventCoordinates;
-                isPieceSelected = true;
-                lightSelect(eventCoordinates);
+            if(isKingChecked) {
+                possiblePawnIfKingIsChecked.forEach(this::lightPawn);
             }
+        } else if(isPossibleMove(eventCoordinates)) {
+            unLightSelect(selectedCoordinates);
+            movePawn(selectedCoordinates, eventCoordinates);
+
+            chessNotation.addMovement(selectedCoordinates, eventCoordinates, getPawn(eventCoordinates), possibleKick.contains(eventCoordinates));
+
+            selectedCoordinates = null;
+            isPieceSelected = false;
+            isKingChecked = false;
+
+            checkPromote(eventCoordinates, 0);
+
+            changeTurn();
+        } else if(isFieldNotNull(eventCoordinates) && Board.getPawn(eventCoordinates).getColor().isWhite() && isPossibleSelect(eventCoordinates, PawnColor.WHITE)) {
+            possibleMovePromote.clear();
+            possibleKickPromote.clear();
+
+            unLightSelect(selectedCoordinates);
+
+            selectedCoordinates = eventCoordinates;
+            isPieceSelected = true;
+            lightSelect(eventCoordinates);
         }
     }
 
@@ -401,9 +402,9 @@ public class Board {
         }
     }
 
-    public static void setGameMode(int gameModeInteger){
-        if(gameModeInteger == 0) gameMode = PLAYER_VS_PLAYER;
-        if(gameModeInteger == 1) gameMode = PLAYER_VS_COMPUTER;
+    public static void setGameMode(String gameModeStr){
+        if(gameModeStr.equals(PLAYER_VS_PLAYER)) gameMode = PLAYER_VS_PLAYER;
+        if(gameModeStr.equals(PLAYER_VS_COMPUTER)) gameMode = PLAYER_VS_COMPUTER;
     }
 
     public static String getGameMode(){
