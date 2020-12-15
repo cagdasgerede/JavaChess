@@ -6,16 +6,19 @@ import pl.nogacz.chess.pawns.Pawn;
 import pl.nogacz.chess.pawns.PawnClass;
 import pl.nogacz.chess.pawns.PawnColor;
 import pl.nogacz.chess.pawns.moves.PawnMoves;
+import pl.nogacz.chess.application.menu.SoundEffect;
 
 import java.io.*;
 import java.util.*;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
+
 /**
  * @author Dawid Nogacz on 01.05.2019
  */
 public class Computer {
+    SoundEffect sound,sound2;
     private HashMap<Coordinates, PawnClass> cacheBoard;
     private Random random = new Random();
     private int skill = 0; // 0 - Normal || 1 - Easy || 2 - Hard
@@ -24,7 +27,7 @@ public class Computer {
     private Set<Coordinates> possibleMoves = new HashSet<>();
     private Set<Coordinates> possibleKickAndNotIsEnemyKickMe = new HashSet<>();
 
-    private BoardPoint boardPoint = new BoardPoint();
+    public static BoardPoint boardPoint = new BoardPoint();
 
     public Computer() {
         if (isExists()) {
@@ -32,6 +35,8 @@ public class Computer {
         } else {
             save();
         }
+        sound= new SoundEffect("./src/main/resources/Audio/click.wav");
+        sound2=new SoundEffect("./src/main/resources/Audio/piece.wav");
     }
 
     private boolean isExists() {
@@ -110,19 +115,19 @@ public class Computer {
         if (possibleMoves.size() > 0) {
             return selectRandom(possibleMoves);
         } else if (possibleKick.size() > 0) {
+           // sound2.play(false); // Sound for piece loss
             return selectRandom(possibleKick);
         }
-
         return null;
     }
 
     private Coordinates choosePawnNormal() {
         if (possibleKick.size() > 0) {
+           // sound2.play(false); // Sound for piece loss
             return selectRandom(possibleKick);
         } else if (possibleMoves.size() > 0) {
             return selectRandom(possibleMoves);
         }
-
         return null;
     }
 
@@ -172,11 +177,13 @@ public class Computer {
                 }
             }
         }
-
         return selectRandom(cachePossiblePawn);
     }
 
     public Coordinates chooseMove(Coordinates coordinates) {
+        if(possibleKick.contains(coordinates)){
+            sound2.play(false); // Sound for piece loss
+        }
         switch (skill) {
             case 1: return chooseMoveEasy(coordinates);
             case 2: return chooseMoveHard(coordinates);
@@ -187,7 +194,6 @@ public class Computer {
     private Coordinates chooseMoveEasy(Coordinates coordinates) {
         PawnClass pawn = Board.getPawn(coordinates);
         PawnMoves moves = new PawnMoves(pawn, coordinates);
-
         if (moves.getPossibleMoves().size() > 0) {
             return selectRandom(moves.getPossibleMoves());
         } else if (moves.getPossibleKick().size() > 0) {
@@ -200,7 +206,6 @@ public class Computer {
     private Coordinates chooseMoveNormal(Coordinates coordinates) {
         PawnClass pawn = Board.getPawn(coordinates);
         PawnMoves moves = new PawnMoves(pawn, coordinates);
-
         if (moves.getPossibleKick().size() > 0) {
             return selectRandom(moves.getPossibleKick());
         } else if (moves.getPossibleMoves().size() > 0) {
@@ -221,8 +226,7 @@ public class Computer {
         Set<Coordinates> listWithOnlyMinNumber = getListWithOnlyMinNumber(possibleMove, pawn);
 
         listWithOnlyMinNumber.forEach(entry -> checkEnemyKickField(entry, pawn));
-
-        if(possibleKickAndNotIsEnemyKickMe.size() > 0) {
+        if(possibleKickAndNotIsEnemyKickMe.size() > 0) {         
             return selectRandom(possibleKickAndNotIsEnemyKickMe);
         } else {
             return selectRandom(listWithOnlyMinNumber);

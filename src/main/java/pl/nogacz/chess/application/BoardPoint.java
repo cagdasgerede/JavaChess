@@ -5,6 +5,7 @@ import pl.nogacz.chess.board.Coordinates;
 import pl.nogacz.chess.pawns.Pawn;
 import pl.nogacz.chess.pawns.PawnClass;
 import pl.nogacz.chess.pawns.moves.PawnMoves;
+import pl.nogacz.chess.application.menu.SoundEffect;
 
 import java.util.HashMap;
 import java.util.Map;

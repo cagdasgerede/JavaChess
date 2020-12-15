@@ -4,7 +4,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import pl.nogacz.chess.Chess;
 import pl.nogacz.chess.application.SaveGame;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -15,8 +14,9 @@ import java.util.Optional;
 public class EndGame {
     private SaveGame saveGame = new SaveGame();
     private String message;
-
+    SoundEffect sound;
     public EndGame(String message) {
+        sound = new SoundEffect("./src/main/resources/Audio/click.wav");
         this.message = message;
     }
 
@@ -43,6 +43,7 @@ public class EndGame {
     public void newGame() {
         saveGame.remove();
         restartApplication();
+        sound.play(false); //Sound for New Game button.
     }
 
     private void restartApplication()

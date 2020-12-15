@@ -11,6 +11,8 @@ import java.util.Optional;
  */
 public class Difficulty {
     public Difficulty() {
+        SoundEffect sound = new SoundEffect("./src/main/resources/Audio/click.wav");
+        sound.play(false); //Sound for Difficulty button
         Alert alert = new Alert(Alert.AlertType.NONE);
         alert.setTitle("JavaChess");
         alert.setContentText("Select difficulty");
@@ -25,10 +27,13 @@ public class Difficulty {
 
         if (result.get() == easy){
             Board.setComputerSkill(1);
+            sound.play(false); //Sound for Easy button
         } else if (result.get() == hard){
             Board.setComputerSkill(2);
+            sound.play(false); //Sound for Hard button
         } else {
             Board.setComputerSkill(0);
+            sound.play(false); //Sound for Medium button
         }
     }
 }

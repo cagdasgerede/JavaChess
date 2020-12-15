@@ -14,18 +14,21 @@ import pl.nogacz.chess.application.menu.EndGame;
 import pl.nogacz.chess.application.menu.Statistics;
 import pl.nogacz.chess.board.Coordinates;
 import pl.nogacz.chess.pawns.PawnClass;
+import pl.nogacz.chess.application.menu.SoundEffect;
 
 /**
  * @author Dawid Nogacz on 01.05.2019
  */
 public class Design {
+    SoundEffect sound= new SoundEffect("./src/main/resources/Audio/click.wav");
+    public static SoundEffect menu_music= new SoundEffect("./src/main/resources/Audio/menu.wav");
+    public static SoundEffect background_music= new SoundEffect("./src/main/resources/Audio/background.wav");
     private static BorderPane borderPane = new BorderPane();
     private static GridPane gridPane = new GridPane();
     private VBox vBox = new VBox();
     private static TextArea textArea = new TextArea();
     private HBox hBox = new HBox();
     private static Image lightMove = new Image(Resources.getPath("light.png"));
-
     public Design() {
         createBoardBackground();
         generateEmptyBoard();
@@ -35,6 +38,8 @@ public class Design {
         borderPane.setCenter(gridPane);
         borderPane.setRight(vBox);
         borderPane.setTop(hBox);
+        menu_music.play(true);
+        
     }
 
     public BorderPane getBorderPane() {
@@ -71,7 +76,6 @@ public class Design {
             row.setValignment(VPos.CENTER);
             gridPane.getRowConstraints().add(row);
         }
-
         gridPane.setPadding(new Insets(37, 0, 0, 37));
     }
 
@@ -99,11 +103,11 @@ public class Design {
         Button author = new Button("Author");
         author.setPrefSize(100, 20);
         author.setOnMouseClicked(event -> new AuthorInfo());
+        
 
         Button exitGame = new Button("Exit game");
         exitGame.setPrefSize(100, 20);
         exitGame.setOnMouseClicked(event -> System.exit(0));
-
         hBox.getChildren().addAll(newGame, difficulty, statistics, author, exitGame);
     }
 

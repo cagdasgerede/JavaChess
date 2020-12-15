@@ -14,6 +14,8 @@ import pl.nogacz.chess.pawns.PawnClass;
 import pl.nogacz.chess.pawns.PawnColor;
 import pl.nogacz.chess.pawns.PawnPromote;
 import pl.nogacz.chess.pawns.moves.PawnMoves;
+import pl.nogacz.chess.application.menu.SoundEffect;
+import pl.nogacz.chess.application.Computer;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -48,7 +50,15 @@ public class Board {
     private boolean isKingChecked = false;
     private Set<Coordinates> possiblePawnIfKingIsChecked = new HashSet<>();
 
+    SoundEffect sound,sound2,sound3,sound4,sound5;
+    static int moveNumber=0; //If moveNumber == 1, it means that it is the first move.
+
     public Board() {
+        sound= new SoundEffect("./src/main/resources/Audio/click.wav"); //SoundEffect object for Clicking
+        sound2= new SoundEffect("./src/main/resources/Audio/victory.wav"); //SoundEffect object for Victory
+        sound3= new SoundEffect("./src/main/resources/Audio/defeat.wav"); //SoundEffect object for Defeat
+        sound4= new SoundEffect("./src/main/resources/Audio/piece.wav"); //SoundEffect object for Win/Lose the piece
+        sound5= new SoundEffect("./src/main/resources/Audio/move.wav"); //SoundEffect object for movement
         if(saveGame.isSave()) {
             saveGame.load();
 
@@ -80,8 +90,8 @@ public class Board {
         board.put(new Coordinates(0,0), new PawnClass(Pawn.ROOK, PawnColor.BLACK));
         board.put(new Coordinates(1,0), new PawnClass(Pawn.KNIGHT, PawnColor.BLACK));
         board.put(new Coordinates(2,0), new PawnClass(Pawn.BISHOP, PawnColor.BLACK));
-        board.put(new Coordinates(3,0), new PawnClass(Pawn.KING, PawnColor.BLACK));
-        board.put(new Coordinates(4,0), new PawnClass(Pawn.QUEEN, PawnColor.BLACK));
+        board.put(new Coordinates(3,0), new PawnClass(Pawn.QUEEN, PawnColor.BLACK)); //Bugfix: Wrong queen and king positions changed.
+        board.put(new Coordinates(4,0), new PawnClass(Pawn.KING, PawnColor.BLACK));
         board.put(new Coordinates(5,0), new PawnClass(Pawn.BISHOP, PawnColor.BLACK));
         board.put(new Coordinates(6,0), new PawnClass(Pawn.KNIGHT, PawnColor.BLACK));
         board.put(new Coordinates(7,0), new PawnClass(Pawn.ROOK, PawnColor.BLACK));
@@ -120,12 +130,16 @@ public class Board {
 
         if(!gameLogic.isMovePossible()) {
             noMovePossibleInfo();
-        }  else if(isKingChecked && possiblePawnIfKingIsChecked.size() == 0) {
+        }else if(isKingChecked && possiblePawnIfKingIsChecked.size() == 0) {
             if(gameLogic.isKingChecked(PawnColor.BLACK)) {
                 statistics.addGameWin();
+                Design.background_music.stop(); //Stops the background music
+                sound2.play(false); //Sound for victory
                 endGame("You win! Congratulations :)");
             } else {
                 statistics.addGameLoss();
+                Design.background_music.stop(); //Stops the background music
+                sound3.play(false); //Sound for defeat
                 endGame("You loss. Maybe you try again?");
             }
         } else {
@@ -144,7 +158,9 @@ public class Board {
                     movePawn(selectedCoordinates, eventCoordinates);
 
                     chessNotation.addMovement(selectedCoordinates, eventCoordinates, getPawn(eventCoordinates), possibleKick.contains(eventCoordinates));
-
+                    if(possibleKick.contains(eventCoordinates)){ //If the move is on the enemy's piece.
+                        sound4.play(false); //Sound for won piece.
+                    }
                     selectedCoordinates = null;
                     isSelected = false;
                     isKingChecked = false;
@@ -167,7 +183,6 @@ public class Board {
                     if(Board.getPawn(eventCoordinates).getColor().isBlack()) {
                         return;
                     }
-
                     possibleMovePromote.clear();
                     possibleKickPromote.clear();
 
@@ -196,11 +211,10 @@ public class Board {
             @Override
             protected Void call() throws Exception {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(2000); //Changed 1000 to 2000 because of the sound bug, it is not necessary but it works perfect with 2 seconds delay
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
-
                 return null;
             }
         };
@@ -227,6 +241,8 @@ public class Board {
                         checkPromote(moveCoordinates, 1);
                     } else {
                         statistics.addGameWin();
+                        Design.background_music.stop(); //Stops the background music
+                        sound2.play(false); //Sound for victory
                         endGame("You win! Congratulations :)");
                     }
 
@@ -257,10 +273,12 @@ public class Board {
 
             if(possiblePawnIfKingIsChecked.size() == 0) {
                 statistics.addGameWin();
+                Design.background_music.stop(); //Stops the background music
+                sound2.play(false); // Sound for victory
                 endGame("You win! Congratulations! :)");
             } else {
                 selectedCoordinates = computer.selectRandom(possiblePawnIfKingIsChecked);
-                lightSelect(selectedCoordinates);
+                lightSelect(selectedCoordinates);       
 
                 new Thread(computerSleep).start();
             }
@@ -284,7 +302,10 @@ public class Board {
         switch(gameLogic.getWinner()) {
             case DRAW_COLOR: { statistics.addGameDraw(); endGame("Draw. Maybe you try again?"); break; }
             case WHITE: { statistics.addGameWin(); endGame("You win! Congratulations! :)"); break; }
-            case BLACK: { statistics.addGameLoss(); endGame("You loss. Maybe you try again?"); break; }
+            case BLACK: { statistics.addGameLoss(); 
+                          Design.background_music.stop(); //Stops the background music
+                          sound3.play(false); //Sound for defeat
+                          endGame("You loss. Maybe you try again?"); break; }
         }
     }
 
@@ -310,7 +331,6 @@ public class Board {
 
     private boolean isPossibleSelect(Coordinates coordinates, PawnColor color) {
         isKingChecked = gameLogic.isKingChecked(color);
-
         if(isKingChecked) {
             possiblePawnIfKingIsChecked = gameLogic.getPossiblePawnIfKingIsChecked(color);
 
@@ -318,7 +338,6 @@ public class Board {
 
             return possiblePawnIfKingIsChecked.contains(coordinates);
         }
-
         return true;
     }
 
@@ -326,7 +345,7 @@ public class Board {
         return possibleMoves.contains(coordinates) || possibleKick.contains(coordinates);
     }
 
-    public static boolean isFieldNotNull(Coordinates coordinates) {
+    public static boolean isFieldNotNull(Coordinates coordinates) { 
         PawnClass pawn = getPawn(coordinates);
         return pawn != null;
     }
@@ -369,11 +388,21 @@ public class Board {
     }
 
     private void movePawn(Coordinates oldCoordinates, Coordinates newCoordinates) {
+        moveNumber++;
+        if(moveNumber==1){
+            Design.menu_music.stop(); //Stops the background music
+            Design.background_music.play(true);
+        }
+        if(possibleKick.size() > 0) //Check if any piece is in the target
+        {
+            //sound4.play(false); //Sound for win a piece
+        }
+        sound5.play(false); //Sound for moves
         PawnClass pawn = getPawn(oldCoordinates);
         Design.removePawn(oldCoordinates);
         Design.removePawn(newCoordinates);
         Design.addPawn(newCoordinates, pawn);
-
+        
         board.remove(oldCoordinates);
         board.put(newCoordinates, pawn);
     }
@@ -412,7 +441,7 @@ public class Board {
         PawnClass pawn = getPawn(coordinates);
         if(pawn != null) {
             Design.removePawn(coordinates);
-            Design.addCheckedPawn(coordinates, pawn);
+            Design.addCheckedPawn(coordinates, pawn);   
         }
     }
 
@@ -431,7 +460,6 @@ public class Board {
 
     private void unLightPawn(Coordinates coordinates) {
         PawnClass pawn = getPawn(coordinates);
-
         if(pawn != null) {
             Design.removePawn(coordinates);
             Design.addPawn(coordinates, pawn);

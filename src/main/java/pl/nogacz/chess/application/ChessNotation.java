@@ -2,6 +2,7 @@ package pl.nogacz.chess.application;
 
 import pl.nogacz.chess.board.Coordinates;
 import pl.nogacz.chess.pawns.PawnClass;
+import pl.nogacz.chess.application.menu.SoundEffect;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.List;
  */
 public class ChessNotation implements Serializable {
     private static List<String> movesList = new ArrayList<>();
-
+    SoundEffect sound= new SoundEffect("./src/main/resources/Audio/piece.wav");
     private String playerMove = "";
     private String computerMove = "";
 
@@ -50,7 +51,6 @@ public class ChessNotation implements Serializable {
             round++;
             text = text + round + ". " + move + "\n";
         }
-
         Design.setTextInTextArea(text);
     }
 

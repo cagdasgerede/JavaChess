@@ -14,6 +14,10 @@ public class Coordinates implements Serializable {
         this.x = x;
         this.y = y;
     }
+    public Coordinates(Coordinates coordinate){
+        this.x=coordinate.getX();
+        this.y=coordinate.getY();
+    }
 
     public int getX() {
         return x;
