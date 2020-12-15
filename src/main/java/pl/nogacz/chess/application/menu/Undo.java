@@ -10,59 +10,21 @@ import pl.nogacz.chess.application.ChessNotation;
 import pl.nogacz.chess.pawns.PawnClass;
 
 public class Undo{
-        private ArrayList<Character> pawnCodes = new ArrayList();
-    public Undo(){
-        pawnCodes.add('H');
-        pawnCodes.add('S');
-        pawnCodes.add('K');
-        pawnCodes.add('W');
-        pawnCodes.add('G');
 
-        Coordinates oldCoordinate;
-        Coordinates newCoordinate;
-        boolean playerPieceRemoved = false;
+    public Undo(){
+
         boolean computerPieceRemoved = false;
 
         String lastMove=ChessNotation.removeMovement();
 
         String computer = lastMove.substring(lastMove.indexOf(" ")+1);
-        if(pawnCodes.contains(computer.charAt(0))){
-            computer = computer.substring(1);
-        }
-        if(computer.charAt(0) == 'x'){
-            playerPieceRemoved = true;
-            computer = computer.substring(1);
-        }
-        String computerOld = computer.substring(0,2);
-        String computerNew = computer.substring(2);
-        oldCoordinate = getCoordinate(computerOld);
-        newCoordinate = getCoordinate(computerNew);
-        Board.undo(oldCoordinate, newCoordinate);
-        if(playerPieceRemoved){
-            PawnClass pawn=ChessNotation.removeKicked();
-            Board.resurrection(pawn, newCoordinate);
-        }
-
         String player = lastMove.substring(0,lastMove.indexOf(" "));
-        if(pawnCodes.contains(player.charAt(0))){
-            player = player.substring(1);
-        }
-        if(player.charAt(0) == 'x'){
-            computerPieceRemoved = true;
-            player = player.substring(1);
-        }
-        String playerOld = player.substring(0,2);
-        String playerNew = player.substring(2);
-        oldCoordinate = getCoordinate(playerOld);
-        newCoordinate = getCoordinate(playerNew);
-        Board.undo(oldCoordinate, newCoordinate);
-        if(computerPieceRemoved){
-            PawnClass pawn = ChessNotation.removeKicked();
-            Board.resurrection(pawn, newCoordinate);
-        }
 
+        removeMovement(computer);
+        removeMovement(player);
 
     }
+
     public Coordinates getCoordinate(String s){
         char letter = s.charAt(0);
         int y = Integer.parseInt(s.substring(1));
@@ -95,5 +57,39 @@ public class Undo{
         y = 7-y;
         Coordinates coordinate = new Coordinates(x,y);
         return coordinate;
+    }
+    
+    public void removeMovement(String movement){
+
+        ArrayList<Character> pawnCodes = new ArrayList();
+
+        pawnCodes.add('H');
+        pawnCodes.add('S');
+        pawnCodes.add('K');
+        pawnCodes.add('W');
+        pawnCodes.add('G');
+
+
+        Coordinates oldCoordinate;
+        Coordinates newCoordinate;
+        boolean pieceRemoved = false;
+
+        if(pawnCodes.contains(movement.charAt(0))){
+            movement = movement.substring(1);
+        }
+        if(movement.charAt(0) == 'x'){
+            pieceRemoved = true;
+            movement = movement.substring(1);
+        }
+        String movementOld = movement.substring(0,2);
+        String movementNew = movement.substring(2);
+        oldCoordinate = getCoordinate(movementOld);
+        newCoordinate = getCoordinate(movementNew);
+        Board.undo(oldCoordinate, newCoordinate);
+        if(pieceRemoved){
+            PawnClass pawn=ChessNotation.removeKicked();
+            Board.resurrection(pawn, newCoordinate);
+        }
+
     }
 }
