@@ -20,8 +20,8 @@ public class Undo{
 
         Coordinates oldCoordinate;
         Coordinates newCoordinate;
-        boolean playerKicked = false;
-        boolean computerKicked = false;
+        boolean playerPieceRemoved = false;
+        boolean computerPieceRemoved = false;
 
         String lastMove=ChessNotation.removeMovement();
 
@@ -30,7 +30,7 @@ public class Undo{
             computer = computer.substring(1);
         }
         if(computer.charAt(0) == 'x'){
-            playerKicked = true;
+            playerPieceRemoved = true;
             computer = computer.substring(1);
         }
         String computerOld = computer.substring(0,2);
@@ -38,7 +38,7 @@ public class Undo{
         oldCoordinate = getCoordinate(computerOld);
         newCoordinate = getCoordinate(computerNew);
         Board.undo(oldCoordinate, newCoordinate);
-        if(playerKicked){
+        if(playerPieceRemoved){
             PawnClass pawn=ChessNotation.removeKicked();
             Board.resurrection(pawn, newCoordinate);
         }
@@ -48,7 +48,7 @@ public class Undo{
             player = player.substring(1);
         }
         if(player.charAt(0) == 'x'){
-            computerKicked=true;
+            computerPieceRemoved = true;
             player = player.substring(1);
         }
         String playerOld = player.substring(0,2);
@@ -56,7 +56,7 @@ public class Undo{
         oldCoordinate = getCoordinate(playerOld);
         newCoordinate = getCoordinate(playerNew);
         Board.undo(oldCoordinate, newCoordinate);
-        if(computerKicked){
+        if(computerPieceRemoved){
             PawnClass pawn = ChessNotation.removeKicked();
             Board.resurrection(pawn, newCoordinate);
         }
