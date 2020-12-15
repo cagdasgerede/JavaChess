@@ -12,9 +12,6 @@ import pl.nogacz.chess.pawns.PawnClass;
 public class Undo{
 
     public Undo(){
-
-        boolean computerPieceRemoved = false;
-
         String lastMove=ChessNotation.removeMovement();
 
         String computer = lastMove.substring(lastMove.indexOf(" ")+1);
@@ -22,7 +19,6 @@ public class Undo{
 
         removeMovement(computer);
         removeMovement(player);
-
     }
 
     public Coordinates getCoordinate(String s){
