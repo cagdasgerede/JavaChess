@@ -87,7 +87,7 @@ public class Undo{
         newCoordinate = getCoordinate(movementNew);
         Board.undo(oldCoordinate, newCoordinate);
         if(pieceRemoved){
-            PawnClass pawn=ChessNotation.removeKicked();
+            PawnClass pawn = ChessNotation.removeKicked();
             Board.resurrection(pawn, newCoordinate);
         }
 
