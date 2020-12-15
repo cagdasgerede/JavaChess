@@ -2,11 +2,8 @@ package pl.nogacz.chess.board;
 
 import org.junit.Test;
 
-import jdk.jfr.Timestamp;
-
 import org.junit.Assert;
 import java.util.ArrayList;
-
 import static org.junit.Assert.*;
 
 import pl.nogacz.chess.application.menu.Undo;
