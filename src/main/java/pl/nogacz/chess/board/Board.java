@@ -370,9 +370,10 @@ public class Board {
 
     private void movePawn(Coordinates oldCoordinates, Coordinates newCoordinates) {
         PawnClass pawn = getPawn(oldCoordinates);
-        PawnClass kicked=getPawn(newCoordinates);
-        if(kicked!=null)
+        PawnClass kicked = getPawn(newCoordinates);
+        if(kicked != null){
             ChessNotation.addKicked(kicked);
+        }
         Design.removePawn(oldCoordinates);
         Design.removePawn(newCoordinates);
         Design.addPawn(newCoordinates, pawn);
