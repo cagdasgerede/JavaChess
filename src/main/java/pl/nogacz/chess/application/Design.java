@@ -48,6 +48,7 @@ public class Design {
         if(calc < 0)
             calc = 0;
         winChance.setValue(calc);
+        winChance.setStyle("-fx-background-color: linear-gradient(to right, #000 " + calc + "%, #fff " + (100 - calc) + "%)!important;" );
     }
     public BorderPane getBorderPane() {
         return borderPane;
@@ -94,15 +95,15 @@ public class Design {
 
         vBox.getChildren().add(textArea);
     }
-//position absolute
+
     public void createTopMenu() {      
         winChance.setValue(50);
         winChance.setDisable(true);
         winChance.setOpacity(1);
-        winChance.setShowTickLabels(true);
         winChance.setShowTickMarks(true);
-        winChance.setMajorTickUnit(50);
         winChance.setBlockIncrement(10);
+        winChance.setStyle("-fx-background-color: linear-gradient(to right, #000 50%, #fff 50%)!important;" );
+
         Button newGame = new Button("New game");
         newGame.setPrefSize(100, 20);
         newGame.setOnMouseClicked(event -> new EndGame("").newGame());
