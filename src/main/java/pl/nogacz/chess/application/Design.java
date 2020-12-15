@@ -45,6 +45,8 @@ public class Design {
         calc = (calc+100) / 2;
         winChance.setValue(calc);
 
+        String style = String.format("-fx-fill: linear-gradient(to right, #8faeea %d%%, #969696 %d%%);",calc, calc);
+        winChance.setStyle(style);
         System.out.println("Total value: " + calc);
     }
     public BorderPane getBorderPane() {
@@ -97,6 +99,10 @@ public class Design {
         winChance.setValue(50);
         winChance.setDisable(true);
         winChance.setOpacity(1);
+        winChance.setShowTickLabels(true);
+        winChance.setShowTickMarks(true);
+        winChance.setMajorTickUnit(50);
+        winChance.setBlockIncrement(10);
         Button newGame = new Button("New game");
         newGame.setPrefSize(100, 20);
         newGame.setOnMouseClicked(event -> new EndGame("").newGame());
