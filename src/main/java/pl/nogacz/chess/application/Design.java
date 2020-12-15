@@ -43,11 +43,11 @@ public class Design {
     
     public static void setWinChance(int calc){
         calc = (calc+100) / 2;
+        if(calc > 100)
+            calc = 100;
+        if(calc < 0)
+            calc = 0;
         winChance.setValue(calc);
-
-        String style = String.format("-fx-fill: linear-gradient(to right, #8faeea %d%%, #969696 %d%%);",calc, calc);
-        winChance.setStyle(style);
-        System.out.println("Total value: " + calc);
     }
     public BorderPane getBorderPane() {
         return borderPane;

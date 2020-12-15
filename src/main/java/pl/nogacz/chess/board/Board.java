@@ -192,7 +192,6 @@ public class Board {
     }
 
     private void computerMove() {
-        Design.setWinChance(bp.calculateBoard());
         System.out.println("Black Move: " + bp.calculateBoard());
         Task<Void> computerSleep = new Task<Void>() {
             @Override
@@ -248,7 +247,6 @@ public class Board {
                 chessNotation.saveRound();
                 saveGame.save();
                 Design.setWinChance(bp.calculateBoard());
-                System.out.println("White Move: " + bp.calculateBoard());
             }
         });
 
