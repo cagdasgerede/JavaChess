@@ -16,10 +16,6 @@ public class Undo{
         boolean playerKicked = false;
         boolean computerKicked = false;
 
-        Alert alert = new Alert(Alert.AlertType.NONE);
-        alert.setTitle("JavaChess");
-        alert.setContentText("Undo last move");
-
         String lastMove=ChessNotation.removeMovement();
 
         String computer = lastMove.substring(lastMove.indexOf(" ")+1);
