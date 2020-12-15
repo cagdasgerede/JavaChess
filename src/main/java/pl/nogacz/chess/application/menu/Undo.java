@@ -27,11 +27,11 @@ public class Undo{
 
         String computer = lastMove.substring(lastMove.indexOf(" ")+1);
         if(pawnCodes.contains(computer.charAt(0))){
-            computer=computer.substring(1);
+            computer = computer.substring(1);
         }
         if(computer.charAt(0) == 'x'){
-            playerKicked=true;
-            computer=computer.substring(1);
+            playerKicked = true;
+            computer = computer.substring(1);
         }
         String computerOld = computer.substring(0,2);
         String computerNew = computer.substring(2);
@@ -45,11 +45,11 @@ public class Undo{
 
         String player = lastMove.substring(0,lastMove.indexOf(" "));
         if(pawnCodes.contains(player.charAt(0))){
-            player=player.substring(1);
+            player = player.substring(1);
         }
         if(player.charAt(0) == 'x'){
             computerKicked=true;
-            player=player.substring(1);
+            player = player.substring(1);
         }
         String playerOld = player.substring(0,2);
         String playerNew = player.substring(2);
@@ -57,7 +57,7 @@ public class Undo{
         newCoordinate = getCoordinate(playerNew);
         Board.undo(oldCoordinate, newCoordinate);
         if(computerKicked){
-            PawnClass pawn=ChessNotation.removeKicked();
+            PawnClass pawn = ChessNotation.removeKicked();
             Board.resurrection(pawn, newCoordinate);
         }
 
