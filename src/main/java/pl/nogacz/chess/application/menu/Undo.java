@@ -1,5 +1,6 @@
 package pl.nogacz.chess.application.menu;
 
+import java.util.ArrayList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import jdk.internal.net.http.common.SubscriberWrapper;
@@ -9,8 +10,14 @@ import pl.nogacz.chess.application.ChessNotation;
 import pl.nogacz.chess.pawns.PawnClass;
 
 public class Undo{
-
+        private ArrayList<Character> pawnCodes = new ArrayList();
     public Undo(){
+        pawnCodes.add('H');
+        pawnCodes.add('S');
+        pawnCodes.add('K');
+        pawnCodes.add('W');
+        pawnCodes.add('G');
+
         Coordinates oldCoordinate;
         Coordinates newCoordinate;
         boolean playerKicked = false;
@@ -19,7 +26,7 @@ public class Undo{
         String lastMove=ChessNotation.removeMovement();
 
         String computer = lastMove.substring(lastMove.indexOf(" ")+1);
-        if((computer.charAt(0) == 'H') || (computer.charAt(0) == 'S') || (computer.charAt(0) == 'K') || (computer.charAt(0) == 'W') || (computer.charAt(0) == 'G')){
+        if(pawnCodes.contains(computer.charAt(0))){
             computer=computer.substring(1);
         }
         if(computer.charAt(0) == 'x'){
@@ -37,7 +44,7 @@ public class Undo{
         }
 
         String player = lastMove.substring(0,lastMove.indexOf(" "));
-        if((player.charAt(0) == 'H') || (player.charAt(0) == 'S') || (player.charAt(0) == 'K') || (player.charAt(0) == 'W') || (player.charAt(0) == 'G')){
+        if(pawnCodes.contains(player.charAt(0))){
             player=player.substring(1);
         }
         if(player.charAt(0) == 'x'){
