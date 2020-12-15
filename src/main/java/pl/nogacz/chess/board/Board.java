@@ -47,7 +47,7 @@ public class Board {
 
     private boolean isKingChecked = false;
     private Set<Coordinates> possiblePawnIfKingIsChecked = new HashSet<>();
-
+    private static BoardPoint bp = new BoardPoint();
     public Board() {
         if(saveGame.isSave()) {
             saveGame.load();
@@ -192,6 +192,8 @@ public class Board {
     }
 
     private void computerMove() {
+        Design.setWinChance(bp.calculateBoard());
+        System.out.println("Black Move: " + bp.calculateBoard());
         Task<Void> computerSleep = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
@@ -245,6 +247,8 @@ public class Board {
                 selectedCoordinates = null;
                 chessNotation.saveRound();
                 saveGame.save();
+                Design.setWinChance(bp.calculateBoard());
+                System.out.println("White Move: " + bp.calculateBoard());
             }
         });
 
@@ -273,6 +277,7 @@ public class Board {
         } else {
             noMovePossibleInfo();
         }
+ 
     }
 
     private void endGame(String message) {

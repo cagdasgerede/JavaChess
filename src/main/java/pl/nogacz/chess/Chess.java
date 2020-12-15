@@ -26,7 +26,6 @@ public class Chess extends Application {
         Scene scene = new Scene(design.getBorderPane(), 900, 790, Color.BLACK);
         design.getGridPane().setOnMouseClicked(event -> board.readMouseEvent(event));
         scene.setOnKeyReleased(event -> board.readKeyboard(event));
-
         primaryStage.setTitle("JavaChess");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);

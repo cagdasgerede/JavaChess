@@ -36,11 +36,11 @@ public class BoardPoint {
                 } else if(pawnMoves.getPossibleKick().size() > 0) {
                     blackPoint += 5;
                 }
-
                 blackPoint += calculatePawn(entry.getKey(), entry.getValue());
             }
         }
-
+       
+        
         return blackPoint - whitePoint;
     }
 

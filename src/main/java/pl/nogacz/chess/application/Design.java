@@ -8,6 +8,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.control.Slider;
 import pl.nogacz.chess.application.menu.AuthorInfo;
 import pl.nogacz.chess.application.menu.Difficulty;
 import pl.nogacz.chess.application.menu.EndGame;
@@ -25,7 +26,10 @@ public class Design {
     private static TextArea textArea = new TextArea();
     private HBox hBox = new HBox();
     private static Image lightMove = new Image(Resources.getPath("light.png"));
-
+    private static BoardPoint bp = new BoardPoint();
+    static Slider winChance = new Slider(0, 100, 0);
+    
+    
     public Design() {
         createBoardBackground();
         generateEmptyBoard();
@@ -36,7 +40,13 @@ public class Design {
         borderPane.setRight(vBox);
         borderPane.setTop(hBox);
     }
+    
+    public static void setWinChance(int calc){
+        calc = (calc+100) / 2;
+        winChance.setValue(calc);
 
+        System.out.println("Total value: " + calc);
+    }
     public BorderPane getBorderPane() {
         return borderPane;
     }
@@ -82,8 +92,11 @@ public class Design {
 
         vBox.getChildren().add(textArea);
     }
-
-    public void createTopMenu() {
+//position absolute
+    public void createTopMenu() {      
+        winChance.setValue(50);
+        winChance.setDisable(true);
+        winChance.setOpacity(1);
         Button newGame = new Button("New game");
         newGame.setPrefSize(100, 20);
         newGame.setOnMouseClicked(event -> new EndGame("").newGame());
@@ -104,7 +117,7 @@ public class Design {
         exitGame.setPrefSize(100, 20);
         exitGame.setOnMouseClicked(event -> System.exit(0));
 
-        hBox.getChildren().addAll(newGame, difficulty, statistics, author, exitGame);
+        hBox.getChildren().addAll(newGame, difficulty, statistics, author, exitGame, winChance);
     }
 
     public static void addPawn(Coordinates coordinates, PawnClass pawn) {
@@ -126,7 +139,6 @@ public class Design {
     public static void removePawn(Coordinates coordinates) {
         gridPane.getChildren().removeIf(node -> GridPane.getColumnIndex(node) == coordinates.getX() && GridPane.getRowIndex(node) == coordinates.getY());
     }
-
     public static void setTextInTextArea(String text) {
         textArea.setText(text);
     }
