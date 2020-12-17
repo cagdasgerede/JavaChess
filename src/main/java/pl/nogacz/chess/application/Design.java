@@ -24,8 +24,8 @@ import pl.nogacz.chess.pawns.PawnClass;
 public class Design {
     private static final int BUTTON_WIDTH = 100;
     private static final int BUTTON_HEIGHT = 20;
-    private static final int LABEL_WIDTH = 380;
-    private static final int LABEL_HEIGHT = 20;
+    private static final int LABEL_WIDTH = 220;
+    private static final int LABEL_HEIGHT = 40;
     private static BorderPane borderPane = new BorderPane();
     private static GridPane gridPane = new GridPane();
     private VBox vBox = new VBox();
@@ -33,6 +33,7 @@ public class Design {
     private HBox hBox = new HBox();
     private static Image lightMove = new Image(Resources.getPath("light.png"));
     public static Label gameModeLabel = new Label();
+    public static Label turnLabel = new Label();
 
     public Design() {
         createBoardBackground();
@@ -117,14 +118,16 @@ public class Design {
         exitGame.setOnMouseClicked(event -> System.exit(0));
 
         gameModeLabel.setPrefSize(LABEL_WIDTH, LABEL_HEIGHT);
-        gameModeLabel.setText("Game Mode: Player Vs Computer");
+        gameModeLabel.setText("Game Mode: Player Vs Computer\nTurn : White");
 
         hBox.getChildren().addAll(newGame, difficulty, statistics, author, gameMode, exitGame, gameModeLabel);
     }
 
     public static void refreshGameModeLabel(){
-        if(Board.getGameMode().equals(Board.PLAYER_VS_COMPUTER)) gameModeLabel.setText("Game Mode: Player Vs Computer");
-        else if(Board.getGameMode().equals(Board.PLAYER_VS_PLAYER)) gameModeLabel.setText("Game Mode: Player Vs Player");
+        if(Board.getGameMode().equals(Board.PLAYER_VS_COMPUTER) && Board.isComputerRound()) gameModeLabel.setText("Game Mode: Player Vs Computer\nTurn : Black");
+        if(Board.getGameMode().equals(Board.PLAYER_VS_COMPUTER) && !Board.isComputerRound()) gameModeLabel.setText("Game Mode: Player Vs Computer\nTurn : White");
+        else if(Board.getGameMode().equals(Board.PLAYER_VS_PLAYER) && Board.isWhitesTurn && !Board.isBlacksTurn) gameModeLabel.setText("Game Mode: Player Vs Player\nTurn : White");
+        else if(Board.getGameMode().equals(Board.PLAYER_VS_PLAYER) && !Board.isWhitesTurn && Board.isBlacksTurn) gameModeLabel.setText("Game Mode: Player Vs Player\nTurn : Black");
     }
 
     public static void addPawn(Coordinates coordinates, PawnClass pawn) {

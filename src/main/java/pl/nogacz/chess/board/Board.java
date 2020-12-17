@@ -35,14 +35,14 @@ public class Board {
     public static final String PLAYER_VS_PLAYER = "playerVsPlayer";
     public static final String PLAYER_VS_COMPUTER = "playerVsComputer";
     private static String gameMode = PLAYER_VS_COMPUTER;
-    private static boolean isWhitesTurn = true;
-    private static boolean isBlacksTurn = false;
+    public static boolean isWhitesTurn = true;
+    public static boolean isBlacksTurn = false;
 
     private static final int BOX_HEIGHT = 84;
     private static final int BOX_WIDTH = 37;
 
     private static Computer computer = new Computer();
-    private boolean isComputerRound = false;
+    private static boolean isComputerRound = false;
 
     private PawnPromote pawnPromote = new PawnPromote();
     private static Set<Coordinates> possibleMovePromote = new HashSet<>();
@@ -122,6 +122,7 @@ public class Board {
         else if(gameMode == PLAYER_VS_COMPUTER){
             playerVsComputer(event);
         }
+        Design.refreshGameModeLabel();
     }
 
     public void endOfGameForPlayerVsComputer(GameLogic gameLogic){
@@ -132,6 +133,10 @@ public class Board {
             statistics.addGameLoss();
             endGame("You loss. Maybe you try again?");
         }
+    }
+
+    public static boolean isComputerRound() {
+        return isComputerRound;
     }
 
     public void movePieceForPlayerVsComputer(Coordinates eventCoordinates){
@@ -475,6 +480,7 @@ public class Board {
                 selectedCoordinates = null;
                 chessNotation.saveRound();
                 saveGame.save();
+                Design.refreshGameModeLabel();
             }
         });
 
