@@ -4,7 +4,7 @@
 .gradle
 /gameCache
 JavaChess.jar
-.classpath
+/.classpath
 /*.project
 /.settings/org.eclipse.buildship.core.prefs
 /.settings/org.eclipse.jdt.core.prefs
