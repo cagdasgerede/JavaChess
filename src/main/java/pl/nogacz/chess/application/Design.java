@@ -14,15 +14,11 @@ import pl.nogacz.chess.application.menu.EndGame;
 import pl.nogacz.chess.application.menu.Statistics;
 import pl.nogacz.chess.board.Coordinates;
 import pl.nogacz.chess.pawns.PawnClass;
-import pl.nogacz.chess.application.menu.SoundEffect;
 
 /**
  * @author Dawid Nogacz on 01.05.2019
  */
 public class Design {
-    SoundEffect sound= new SoundEffect("./src/main/resources/Audio/click.wav");
-    public static SoundEffect menu_music= new SoundEffect("./src/main/resources/Audio/menu.wav");
-    public static SoundEffect background_music= new SoundEffect("./src/main/resources/Audio/background.wav");
     private static BorderPane borderPane = new BorderPane();
     private static GridPane gridPane = new GridPane();
     private VBox vBox = new VBox();
@@ -38,8 +34,7 @@ public class Design {
         borderPane.setCenter(gridPane);
         borderPane.setRight(vBox);
         borderPane.setTop(hBox);
-        menu_music.play(true);
-        
+        SoundManager.playMenuMusic();
     }
 
     public BorderPane getBorderPane() {
@@ -104,10 +99,10 @@ public class Design {
         author.setPrefSize(100, 20);
         author.setOnMouseClicked(event -> new AuthorInfo());
         
-
         Button exitGame = new Button("Exit game");
         exitGame.setPrefSize(100, 20);
         exitGame.setOnMouseClicked(event -> System.exit(0));
+        
         hBox.getChildren().addAll(newGame, difficulty, statistics, author, exitGame);
     }
 

@@ -9,17 +9,17 @@ import java.util.Optional;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
+import pl.nogacz.chess.application.SoundManager;
+
 /**
  * @author Dawid Nogacz on 12.05.2019
  */
 public class Statistics implements Serializable {
-    SoundEffect sound;
     private int gameWin = 0;
     private int gameLoss = 0;
     private int gameDraw = 0;
 
     public Statistics() {
-        sound = new SoundEffect("./src/main/resources/Audio/click.wav");
         if(isExists()) {
             load();
         } else {
@@ -28,7 +28,7 @@ public class Statistics implements Serializable {
     }
 
     public void printInfo() {
-        sound.play(false); //Sound for statistics button
+        SoundManager.playClickSound(); //Click sound for statistics button
         Alert alert = new Alert(Alert.AlertType.NONE);
         alert.setTitle("JavaChess");
         alert.setContentText("Win: " + gameWin + "\n" +
@@ -44,7 +44,7 @@ public class Statistics implements Serializable {
 
         if (result.get() == reset){
             remove();
-            sound.play(false); //Sound for Reset button in Statistics
+            SoundManager.playClickSound(); //Click sound for Reset button in Statistics
             gameWin = 0;
             gameLoss = 0;
             gameDraw = 0;
@@ -53,7 +53,7 @@ public class Statistics implements Serializable {
             
             printInfo();
         }
-        sound.play(false); //Sound for OK button in Statistics
+        SoundManager.playClickSound(); //Click sound for OK button in Statistics
     }
 
     private boolean isExists() {

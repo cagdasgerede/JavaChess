@@ -8,14 +8,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-import pl.nogacz.chess.application.menu.SoundEffect;
+import pl.nogacz.chess.application.SoundManager;
 
 /**
  * @author Dawid Nogacz on 02.05.2019
  */
 public class PawnPromote {
     private Random random = new Random();
-    SoundEffect sound = new SoundEffect("./src/main/resources/Audio/click.wav");
     private Pawn[] pawns = {Pawn.QUEEN, Pawn.KNIGHT, Pawn.ROOK, Pawn.BISHOP};
     private List<Pawn> dialogData = Arrays.asList(pawns);
 
@@ -30,7 +29,7 @@ public class PawnPromote {
 
         if(result.isPresent()) {
             choice = result.get();
-            sound.play(false);
+            SoundManager.playClickSound(); //Sound for PawnPromote
         }
         
         Board.promotePawn(coordinates, choice);
