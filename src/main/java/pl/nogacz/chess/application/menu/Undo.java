@@ -23,7 +23,7 @@ public class Undo {
         }
     }
 
-    protected static Coordinates getCoordinate(String s){
+    public static Coordinates getCoordinate(String s){
         char letter = s.charAt(0);
         int y = Integer.parseInt(s.substring(1));
         int x = -1;
