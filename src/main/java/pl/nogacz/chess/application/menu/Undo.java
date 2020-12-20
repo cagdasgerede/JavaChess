@@ -1,27 +1,29 @@
 package pl.nogacz.chess.application.menu;
 
 import java.util.ArrayList;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import jdk.internal.net.http.common.SubscriberWrapper;
+import pl.nogacz.chess.application.ChessNotation;
 import pl.nogacz.chess.board.Board;
 import pl.nogacz.chess.board.Coordinates;
-import pl.nogacz.chess.application.ChessNotation;
 import pl.nogacz.chess.pawns.PawnClass;
 
-public class Undo{
+public class Undo {
 
-    public Undo(){
+    public Undo() {
         String lastMove=ChessNotation.removeMovement();
 
-        String computer = lastMove.substring(lastMove.indexOf(" ")+1);
-        String player = lastMove.substring(0,lastMove.indexOf(" "));
+        if(lastMove.equals("")) {
+            System.out.println("No moves detected!");
+        }
+        else {
+            String computer = lastMove.substring(lastMove.indexOf(" ") + 1);
+            String player = lastMove.substring(0,lastMove.indexOf(" "));
 
-        removeMovement(computer);
-        removeMovement(player);
+            removeMovement(computer);
+            removeMovement(player);
+        }
     }
 
-    public static Coordinates getCoordinate(String s){
+    protected static Coordinates getCoordinate(String s){
         char letter = s.charAt(0);
         int y = Integer.parseInt(s.substring(1));
         int x = -1;
@@ -55,7 +57,7 @@ public class Undo{
         return coordinate;
     }
     
-    public void removeMovement(String movement){
+    private void removeMovement(String movement){
 
         ArrayList<Character> pawnCodes = new ArrayList();
 
@@ -64,7 +66,7 @@ public class Undo{
         pawnCodes.add('K');
         pawnCodes.add('W');
         pawnCodes.add('G');
-
+        //KING = K QUEEN = H KNIGHT = S ROOK = W BISHOP = G Already defined by author
 
         Coordinates oldCoordinate;
         Coordinates newCoordinate;
@@ -77,7 +79,7 @@ public class Undo{
             pieceRemoved = true;
             movement = movement.substring(1);
         }
-        String movementOld = movement.substring(0,2);
+        String movementOld = movement.substring(0, 2);
         String movementNew = movement.substring(2);
         oldCoordinate = getCoordinate(movementOld);
         newCoordinate = getCoordinate(movementNew);
@@ -88,4 +90,5 @@ public class Undo{
         }
 
     }
+
 }
