@@ -34,29 +34,31 @@ public class Undo {
         int y = Integer.parseInt(s.substring(1));
         int x = -1;
         y--;
-        if(letter == 'a'){
-            x = 0;
-        }
-        else if(letter == 'b'){
-            x = 1;
-        }
-        else if(letter == 'c'){
-            x = 2;
-        }
-        else if(letter == 'd'){
-            x = 3;
-        }
-        else if(letter == 'e'){
-            x = 4;
-        }
-        else if(letter == 'f'){
-            x = 5;
-        }
-        else if(letter == 'g'){
-            x = 6;
-        }
-        else if(letter == 'h'){
-            x = 7;
+        switch(letter){
+            case 'a':
+                x = 0;
+                break;
+            case 'b':
+                x = 1;
+                break;
+            case 'c':
+                x = 2;
+                break;
+            case 'd':
+                x = 3;
+                break;
+            case 'e':
+                x = 4;
+                break;
+            case 'f':
+                x = 5;
+                break;
+            case 'g':
+                x = 6;
+                break;
+            case 'h':
+                x = 7;
+                break;
         }
         y = 7-y;
         Coordinates coordinate = new Coordinates(x,y);
