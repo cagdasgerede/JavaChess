@@ -8,6 +8,12 @@ import pl.nogacz.chess.pawns.PawnClass;
 
 public class Undo {
 
+    private final char QUEEN = 'H';
+    private final char KING = 'K';
+    private final char KNIGHT = 'S';
+    private final char BISHOP = 'G';
+    private final char ROOK = 'W';
+
     public Undo() {
         String lastMove=ChessNotation.removeMovement();
 
@@ -61,12 +67,11 @@ public class Undo {
 
         ArrayList<Character> pawnCodes = new ArrayList();
 
-        pawnCodes.add('H');
-        pawnCodes.add('S');
-        pawnCodes.add('K');
-        pawnCodes.add('W');
-        pawnCodes.add('G');
-        //KING = K QUEEN = H KNIGHT = S ROOK = W BISHOP = G Already defined by author
+        pawnCodes.add(QUEEN);
+        pawnCodes.add(KING);
+        pawnCodes.add(KNIGHT);
+        pawnCodes.add(ROOK);
+        pawnCodes.add(BISHOP);
 
         Coordinates oldCoordinate;
         Coordinates newCoordinate;
