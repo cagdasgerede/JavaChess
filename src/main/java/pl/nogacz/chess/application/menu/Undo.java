@@ -60,7 +60,7 @@ public class Undo {
                 x = 7;
                 break;
         }
-        y = 7-y;
+        y = 7 - y;
         Coordinates coordinate = new Coordinates(x,y);
         return coordinate;
     }
