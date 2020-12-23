@@ -33,7 +33,6 @@ public class Design {
     private HBox hBox = new HBox();
     private static Image lightMove = new Image(Resources.getPath("light.png"));
     public static Label gameModeLabel = new Label();
-    public static Label turnLabel = new Label();
 
     public Design() {
         createBoardBackground();
@@ -124,10 +123,18 @@ public class Design {
     }
 
     public static void refreshGameModeLabel(){
-        if(Board.getGameMode().equals(Board.PLAYER_VS_COMPUTER) && Board.isComputerRound()) gameModeLabel.setText("Game Mode: Player Vs Computer\nTurn : Black");
-        if(Board.getGameMode().equals(Board.PLAYER_VS_COMPUTER) && !Board.isComputerRound()) gameModeLabel.setText("Game Mode: Player Vs Computer\nTurn : White");
-        else if(Board.getGameMode().equals(Board.PLAYER_VS_PLAYER) && Board.isWhitesTurn && !Board.isBlacksTurn) gameModeLabel.setText("Game Mode: Player Vs Player\nTurn : White");
-        else if(Board.getGameMode().equals(Board.PLAYER_VS_PLAYER) && !Board.isWhitesTurn && Board.isBlacksTurn) gameModeLabel.setText("Game Mode: Player Vs Player\nTurn : Black");
+        if(Board.getGameMode().equals(Board.PLAYER_VS_COMPUTER) && Board.isComputerRound()){
+            gameModeLabel.setText("Game Mode: Player Vs Computer\nTurn : Black");
+        }
+        if(Board.getGameMode().equals(Board.PLAYER_VS_COMPUTER) && !Board.isComputerRound()){
+            gameModeLabel.setText("Game Mode: Player Vs Computer\nTurn : White");
+        }
+        else if(Board.getGameMode().equals(Board.PLAYER_VS_PLAYER) && Board.isWhitesTurn && !Board.isBlacksTurn){
+            gameModeLabel.setText("Game Mode: Player Vs Player\nTurn : White");
+        }
+        else if(Board.getGameMode().equals(Board.PLAYER_VS_PLAYER) && !Board.isWhitesTurn && Board.isBlacksTurn){
+            gameModeLabel.setText("Game Mode: Player Vs Player\nTurn : Black");
+        }
     }
 
     public static void addPawn(Coordinates coordinates, PawnClass pawn) {

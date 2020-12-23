@@ -115,7 +115,6 @@ public class Board {
     }
 
     public void readMouseEvent(MouseEvent event) {
-        System.out.println(event);
         if(gameMode == PLAYER_VS_PLAYER){
             playerVsPlayer(event);
         }

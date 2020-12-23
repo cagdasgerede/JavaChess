@@ -12,6 +12,27 @@ public class TurnMechanismTest {
     }
 
     @Test
+    public void isTurnChangingDouble(){
+        int turn = Board.whoseTurn();
+        Board.changeTurn();
+        Board.changeTurn();
+        assertEquals(turn, Board.whoseTurn());
+    }
+
+    @Test
+    public void isGetGameModeNotNull(){
+        String gameMode = Board.getGameMode();
+        assertNotNull(gameMode);
+    }
+
+    @Test
+    public void isGetGameModeWorkingProperly(){
+        Board.setGameMode(Board.PLAYER_VS_PLAYER);
+        String gameMode = Board.getGameMode();
+        assertEquals(gameMode, Board.PLAYER_VS_PLAYER);
+    }
+
+    @Test
     public void isTurnChanging(){
         Board.changeTurn();
         assertEquals(0, Board.whoseTurn());
@@ -38,12 +59,19 @@ public class TurnMechanismTest {
     @Test
     public void isWaitingForPlayer(){
         Board.setGameMode(Board.PLAYER_VS_PLAYER);
-        try{
-            Thread.sleep(3);
-        }
-        catch(InterruptedException e){
-            System.out.println(e);
-        }
-        assertEquals(Board.PLAYER_VS_PLAYER, Board.getGameMode());
+        assertFalse(Board.isComputerRound());
+    }
+
+    @Test
+    public void isWhoseTurnWorkingProperly(){
+        int turn = Board.whoseTurn();
+        assertEquals(1, turn);
+    }
+
+    @Test
+    public void isWhoseTurnWorkingProperlyWhenChangeTurn(){
+        Board.changeTurn();
+        int turn = Board.whoseTurn();
+        assertEquals(0, turn);
     }
 }
