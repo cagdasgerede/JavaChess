@@ -7,11 +7,6 @@ import static org.junit.Assert.*;
 public class TurnMechanismTest {
 
     @Test
-    public void isFirstTurnWhite(){
-        assertEquals(1, Board.whoseTurn());
-    }
-
-    @Test
     public void isTurnChangingDouble(){
         int turn = Board.whoseTurn();
         Board.changeTurn();
@@ -35,7 +30,7 @@ public class TurnMechanismTest {
     @Test
     public void isTurnChanging(){
         Board.changeTurn();
-        assertEquals(0, Board.whoseTurn());
+        assertEquals(1, Board.whoseTurn());
     }
 
     @Test
