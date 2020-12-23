@@ -192,7 +192,6 @@ public class Board {
     }
 
     private void computerMove() {
-        System.out.println("Black Move: " + bp.calculateBoard());
         Task<Void> computerSleep = new Task<Void>() {
             @Override
             protected Void call() throws Exception {

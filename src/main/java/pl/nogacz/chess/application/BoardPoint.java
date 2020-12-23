@@ -40,7 +40,6 @@ public class BoardPoint {
             }
         }
        
-        
         return blackPoint - whitePoint;
     }
 

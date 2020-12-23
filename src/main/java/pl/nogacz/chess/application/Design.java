@@ -42,7 +42,7 @@ public class Design {
     }
     
     public static void setWinChance(int calc){
-        calc = (calc+100) / 2;
+        calc = (calc + 100) / 2;
         if(calc > 100)
             calc = 100;
         if(calc < 0)
@@ -103,7 +103,6 @@ public class Design {
         winChance.setShowTickMarks(true);
         winChance.setBlockIncrement(10);
         winChance.setStyle("-fx-background-color: linear-gradient(to right, #000 50%, #fff 50%)!important;" );
-
         Button newGame = new Button("New game");
         newGame.setPrefSize(100, 20);
         newGame.setOnMouseClicked(event -> new EndGame("").newGame());
