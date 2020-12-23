@@ -26,9 +26,7 @@ public class Design {
     private static TextArea textArea = new TextArea();
     private HBox hBox = new HBox();
     private static Image lightMove = new Image(Resources.getPath("light.png"));
-    private static BoardPoint bp = new BoardPoint();
     static Slider winChance = new Slider(0, 100, 0);
-    
     
     public Design() {
         createBoardBackground();
@@ -41,15 +39,6 @@ public class Design {
         borderPane.setTop(hBox);
     }
     
-    public static void setWinChance(int calc){
-        calc = (calc + 100) / 2;
-        if(calc > 100)
-            calc = 100;
-        if(calc < 0)
-            calc = 0;
-        winChance.setValue(calc);
-        winChance.setStyle("-fx-background-color: linear-gradient(to right, #000 " + calc + "%, #fff " + (100 - calc) + "%)!important;" );
-    }
     public BorderPane getBorderPane() {
         return borderPane;
     }

@@ -58,7 +58,7 @@ public class BoardPoint {
             case ROOK: point += 2; break;
             case BISHOP: point += 2; break;
         }
-
+        
         return point;
     }
 }

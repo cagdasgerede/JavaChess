@@ -245,7 +245,7 @@ public class Board {
                 selectedCoordinates = null;
                 chessNotation.saveRound();
                 saveGame.save();
-                Design.setWinChance(bp.calculateBoard());
+                WinningOdds.evaluatePoints(bp.calculateBoard());
             }
         });
 
