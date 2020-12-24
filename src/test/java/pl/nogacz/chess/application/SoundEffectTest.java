@@ -31,18 +31,6 @@ public class SoundEffectTest{
         Assert.assertTrue(isException);
     }
 
-    /*@Test 
-    public void notThrowsException() { 
-        boolean isException=false;
-        try{
-            SoundEffect soundEffect = new SoundEffect("./src/main/resources/Audio/move.wav");
-        }
-        catch (Exception e){
-            isException = true;
-        }
-        Assert.assertFalse(isException);
-    }*/
-
     @Test
     public void testPlay() {
         try {
