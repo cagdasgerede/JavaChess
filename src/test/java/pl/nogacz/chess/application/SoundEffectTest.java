@@ -78,39 +78,4 @@ public class SoundEffectTest{
             e.printStackTrace();
         }  
     }
-
-
-  /*  @Test (expected = Exception.class)
-    public void playWithNullPath() throws Exception {
-        soundLoader = mock(SoundLoader.class);
-        soundLoader.playTheSound(f);
-        assertTrue(throwException());
-    }
-
-    @Test
-    public void playIntroWithPath() throws Exception {
-        soundLoader = new SoundLoader("IntroSoundLoader",clip);
-        f = new File("/home/irem/pacman_workshop/src/main/resources/com/thoughtworks/pacman/ui/pacman_beginning.wav");  
-    
-        assertTrue(soundLoader.playTheSound(f));
-    }
-
-    @Test
-    public void playBackgroundWithPath() throws Exception {
-        soundLoader = new SoundLoader("BackgroundSoundLoader",clip);
-
-        assertTrue(soundLoader.playTheSound(mock(File.class)));
-    }
-
-    @Test
-    public void testStop() {
-        soundLoader = mock(SoundLoader.class);
-        soundLoader.setStop();
-        verify(soundLoader).setStop();
-    }
-
-    private boolean throwException() throws Exception{
-        throw new Exception();
-    }
-  */
 }
