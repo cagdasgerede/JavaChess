@@ -45,15 +45,15 @@ public class SoundEffectTest{
 
     @Test
     public void testPlay() {
-        SoundEffect soundEffect = null;
         try {
+            SoundEffect soundEffect = null;
             soundEffect = spy(new SoundEffect("./src/main/resources/Audio/move.wav"));
+            doNothing().when(soundEffect).play(false);
+            soundEffect.play(false);
+            verify(soundEffect, times(1)).play(false);
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        doNothing().when(soundEffect).play(false);
-        soundEffect.play(false);
-        verify(soundEffect, times(1)).play(false);
+        } 
     }
 
     @Test
