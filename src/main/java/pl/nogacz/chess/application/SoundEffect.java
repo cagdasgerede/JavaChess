@@ -17,7 +17,7 @@ public class SoundEffect {
 	Logger logger;
 	FileHandler handler;
 	
-	public SoundEffect(String soundFileName) {
+	public SoundEffect(String soundFileName) throws Exception {
 		try {
 		    logger = Logger.getLogger(SoundEffect.class.getName()); 
 			handler = new FileHandler("logs.txt",true); 
@@ -30,10 +30,13 @@ public class SoundEffect {
 	    	clip.open(audioInputStream);
 	    } catch (UnsupportedAudioFileException e) {
 			logger.warning(e.getMessage());
+			throw new Exception();
 	    } catch (IOException e) {
 			logger.warning(e.getMessage());
+			throw new Exception();
 	    } catch (LineUnavailableException e) {
 			logger.warning(e.getMessage());
+			throw new Exception();
 		}
 		handler.close();
 	}
