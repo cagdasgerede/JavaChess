@@ -31,7 +31,7 @@ public class SoundEffectTest{
         Assert.assertTrue(isException);
     }
 
-    @Test 
+    /*@Test 
     public void notThrowsException() { 
         boolean isException=false;
         try{
@@ -41,7 +41,7 @@ public class SoundEffectTest{
             isException = true;
         }
         Assert.assertFalse(isException);
-    }
+    }*/
 
     @Test
     public void testPlay() {
