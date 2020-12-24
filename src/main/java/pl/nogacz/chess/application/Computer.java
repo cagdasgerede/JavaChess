@@ -17,6 +17,7 @@ import java.util.zip.GZIPOutputStream;
  * @author Dawid Nogacz on 01.05.2019
  */
 public class Computer {
+    private static Coordinates coordinateOfSelectRandom;
     private HashMap<Coordinates, PawnClass> cacheBoard;
     private Random random = new Random();
     private int skill = 0; // 0 - Normal || 1 - Easy || 2 - Hard
@@ -175,9 +176,6 @@ public class Computer {
     }
 
     public Coordinates chooseMove(Coordinates coordinates) {
-        if(possibleKick.contains(coordinates)){
-            SoundManager.playPieceSound(); // Sound for piece loss
-        }
         switch (skill) {
             case 1: return chooseMoveEasy(coordinates);
             case 2: return chooseMoveHard(coordinates);
@@ -189,11 +187,14 @@ public class Computer {
         PawnClass pawn = Board.getPawn(coordinates);
         PawnMoves moves = new PawnMoves(pawn, coordinates);
         if (moves.getPossibleMoves().size() > 0) {
-            return selectRandom(moves.getPossibleMoves());
+            coordinateOfSelectRandom = selectRandom(moves.getPossibleMoves());
+            if(moves.getPossibleKick().contains(coordinateOfSelectRandom))
+                SoundManager.playPieceSound();
+            return coordinateOfSelectRandom;
         } else if (moves.getPossibleKick().size() > 0) {
+            SoundManager.playPieceSound();
             return selectRandom(moves.getPossibleKick());
         }
-
         return null;
     }
 
@@ -201,6 +202,7 @@ public class Computer {
         PawnClass pawn = Board.getPawn(coordinates);
         PawnMoves moves = new PawnMoves(pawn, coordinates);
         if (moves.getPossibleKick().size() > 0) {
+            SoundManager.playPieceSound();
             return selectRandom(moves.getPossibleKick());
         } else if (moves.getPossibleMoves().size() > 0) {
             return selectRandom(moves.getPossibleMoves());
@@ -222,8 +224,14 @@ public class Computer {
         listWithOnlyMinNumber.forEach(entry -> checkEnemyKickField(entry, pawn));
         
         if(possibleKickAndNotIsEnemyKickMe.size() > 0) {
-            return selectRandom(possibleKickAndNotIsEnemyKickMe);
+            coordinateOfSelectRandom =  selectRandom(possibleKickAndNotIsEnemyKickMe);
+            if(moves.getPossibleKick().contains(coordinateOfSelectRandom))
+                SoundManager.playPieceSound();
+            return coordinateOfSelectRandom;
         } else {
+            coordinateOfSelectRandom =  selectRandom(listWithOnlyMinNumber);
+            if(moves.getPossibleKick().contains(coordinateOfSelectRandom))
+                SoundManager.playPieceSound();
             return selectRandom(listWithOnlyMinNumber);
         }
     }
