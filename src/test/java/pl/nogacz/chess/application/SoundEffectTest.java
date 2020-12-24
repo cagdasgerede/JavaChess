@@ -32,9 +32,10 @@ public class SoundEffectTest{
     }
 
     @Test 
-    public void notThrowsException() {
-        boolean isException=false;
+    public void notThrowsException() { 
+        boolean isException;  
         try{
+            isException=false;
             SoundEffect soundEffect = new SoundEffect("./src/main/resources/Audio/move.wav");
         }
         catch (Exception e){
