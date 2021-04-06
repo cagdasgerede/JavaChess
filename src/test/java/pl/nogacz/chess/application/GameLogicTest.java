@@ -6,11 +6,13 @@ import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import pl.nogacz.chess.application.Computer;
 import pl.nogacz.chess.board.Board;
 import pl.nogacz.chess.board.Coordinates;
 import pl.nogacz.chess.pawns.Pawn;
 import pl.nogacz.chess.pawns.PawnClass;
 import pl.nogacz.chess.pawns.PawnColor;
+import pl.nogacz.chess.pawns.moves.PawnMoves;
 
 import java.util.HashMap;
 
@@ -91,5 +93,34 @@ public class GameLogicTest {
 
         //Then
         Assert.assertEquals(false, isMovePossible);
+    }
+
+    @PrepareForTest({Board.class})
+    @Test
+    public void isMoveSuggestorSuggestsCorrectly() {
+        //Given
+        Board.getBoard().clear();
+        
+        PawnClass kingWhite = new PawnClass(Pawn.KING, PawnColor.WHITE);
+        PawnClass queenWhite = new PawnClass(Pawn.QUEEN, PawnColor.WHITE);
+
+        PawnClass kingBlack = new PawnClass(Pawn.KING, PawnColor.BLACK);
+        PawnClass queenBlack = new PawnClass(Pawn.QUEEN, PawnColor.BLACK);
+        PawnClass pawn1Black = new PawnClass(Pawn.PAWN, PawnColor.BLACK);
+        PawnClass pawn2Black = new PawnClass(Pawn.PAWN, PawnColor.BLACK);
+
+        Board.getBoard().put(new Coordinates(0, 1), queenBlack);
+        Board.getBoard().put(new Coordinates(7, 1), kingBlack);
+        Board.getBoard().put(new Coordinates(6, 2), pawn1Black);
+        Board.getBoard().put(new Coordinates(7, 2), pawn2Black);
+        Board.getBoard().put(new Coordinates(0, 7), queenWhite);
+        Board.getBoard().put(new Coordinates(7, 7), kingWhite);
+
+        Computer computer = new Computer();
+
+        PawnMoves queenMoves = new PawnMoves(queenWhite, new Coordinates(0, 7));
+
+        //Then
+        Assert.assertEquals(new Coordinates(0, 1), computer.suggestMove(queenMoves.getPossibleMoves(), queenMoves.getPossibleKick(), queenWhite));
     }
 }
