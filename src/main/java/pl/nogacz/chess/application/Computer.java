@@ -142,7 +142,7 @@ public class Computer {
             cacheMoves.addAll(moves.getPossibleKick());
             cacheMoves.addAll(moves.getPossibleMoves());
 
-            int point = getBestCoordinate(cacheMoves, Board.getPawn(coordinates), PawnColor.BLACK);
+            int point = getBestCoordinatePoint(cacheMoves, Board.getPawn(coordinates), PawnColor.BLACK);
 
             if(point > bestPoint) {
                 bestPoint = point;
@@ -214,9 +214,15 @@ public class Computer {
         PawnClass pawn = Board.getPawn(coordinates);
         PawnMoves moves = new PawnMoves(pawn, coordinates);
 
-        Set<Coordinates> possibleMove = new HashSet<>();
-        possibleMove.addAll(moves.getPossibleMoves());
-        possibleMove.addAll(moves.getPossibleKick());
+        return suggestMove(moves.getPossibleMoves(), moes.getPossibleKick(), pawn);
+    }
+
+    public Coordinates suggestMove(Set<Coordinates> possibleMoves, Set<Coordinates> possibleKick, PawnClass actualPawn){
+        possibleKickAndNotIsEnemyKickMe.clear();
+        
+        Set<Coordinates> allPossibleActs = new HashSet<>();
+        allPossibleActs.addAll(possibleMoves);
+        allPossibleActs.addAll(possibleKick);
 
         Set<Coordinates> listWithBestCoordinates = getListOfBestCoordinates(possibleMove, pawn, pawn.getColor());
 
@@ -229,7 +235,7 @@ public class Computer {
         }
     }
 
-    private int getBestCoordinate(Set<Coordinates> list, PawnClass actualPawn, PawnColor color) {
+    private int getBestCoordinatePoint(Set<Coordinates> list, PawnClass actualPawn, PawnColor color) {
         int bestPoint = (color == PawnColor.BLACK) ? -10000 : 10000;
 
         for(Coordinates coordinates : list) {
@@ -252,7 +258,7 @@ public class Computer {
     }
 
     private Set<Coordinates> getListOfBestCoordinates(Set<Coordinates> list, PawnClass actualPawn, PawnColor color) {
-        int bestPoint = getBestCoordinate(list, actualPawn, color);
+        int bestPoint = getBestCoordinatePoint(list, actualPawn, color);
         Set<Coordinates> returnList = new HashSet<>();
 
         for(Coordinates coordinates : list) {
