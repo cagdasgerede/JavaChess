@@ -12,6 +12,7 @@ import pl.nogacz.chess.application.menu.AuthorInfo;
 import pl.nogacz.chess.application.menu.Difficulty;
 import pl.nogacz.chess.application.menu.EndGame;
 import pl.nogacz.chess.application.menu.Statistics;
+import pl.nogacz.chess.application.menu.BoardEditor;
 import pl.nogacz.chess.board.Coordinates;
 import pl.nogacz.chess.pawns.PawnClass;
 
@@ -104,7 +105,11 @@ public class Design {
         exitGame.setPrefSize(100, 20);
         exitGame.setOnMouseClicked(event -> System.exit(0));
 
-        hBox.getChildren().addAll(newGame, difficulty, statistics, author, exitGame);
+        Button boardEditor = new Button("Board Editor");
+        boardEditor.setPrefSize(100, 20);
+        boardEditor.setOnMouseClicked(event -> new BoardEditor());
+
+        hBox.getChildren().addAll(newGame, difficulty, statistics, author, exitGame, boardEditor);
     }
 
     public static void addPawn(Coordinates coordinates, PawnClass pawn) {

@@ -1,0 +1,12 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Chess",
+            "request": "launch",
+            "mainClass": "pl.nogacz.chess.Chess",
+            "projectName": "JavaChess",
+            "vmArgs": "--module-path \"C:/Program Files/JavaFX/javafx-sdk-11.0.2/lib\" --add-modules javafx.controls,javafx.fxml"
+        },
+    ]
+}
