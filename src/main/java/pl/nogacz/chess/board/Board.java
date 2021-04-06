@@ -399,6 +399,17 @@ public class Board {
         possibleKick.forEach(this::lightPawn);
         possibleCheck.forEach(this::checkedPawn);
 
+        PawnClass currentPawn = Board.getPawn(coordinates);
+        
+        if (currentPawn.getColor() == PawnColor.WHITE) {
+            Coordinates bestMove = computer.suggestMove(possibleMoves, possibleKick, currentPawn);
+
+            if (possibleMoves.contains(bestMove))
+                this.suggestMove(bestMove);
+            else
+                this.suggestPawn(bestMove);
+        }
+        
         lightPawn(coordinates);
     }
 
