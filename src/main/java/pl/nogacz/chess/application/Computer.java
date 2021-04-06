@@ -218,12 +218,16 @@ public class Computer {
     }
 
     public Coordinates suggestMove(Set<Coordinates> possibleMoves, Set<Coordinates> possibleKick, PawnClass actualPawn){
+        
         possibleKickAndNotIsEnemyKickMe.clear();
 
         Set<Coordinates> allPossibleActs = new HashSet<>();
         allPossibleActs.addAll(possibleMoves);
         allPossibleActs.addAll(possibleKick);
 
+        if (allPossibleActs.size() == 0)
+            return null;
+            
         Set<Coordinates> listWithBestCoordinates = getListOfBestCoordinates(allPossibleActs, actualPawn, actualPawn.getColor());
 
         listWithBestCoordinates.forEach(entry -> checkEnemyKickField(entry, actualPawn));
