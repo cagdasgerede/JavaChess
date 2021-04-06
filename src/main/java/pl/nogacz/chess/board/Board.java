@@ -399,6 +399,17 @@ public class Board {
         possibleKick.forEach(this::lightPawn);
         possibleCheck.forEach(this::checkedPawn);
 
+        PawnClass currentPawn = Board.getPawn(coordinates);
+        
+        if (currentPawn.getColor() == PawnColor.WHITE) {
+            Coordinates bestMove = computer.suggestMove(possibleMoves, possibleKick, currentPawn);
+
+            if (possibleMoves.contains(bestMove))
+                this.suggestMove(bestMove);
+            else
+                this.suggestPawn(bestMove);
+        }
+        
         lightPawn(coordinates);
     }
 
@@ -406,6 +417,12 @@ public class Board {
         PawnClass pawn = getPawn(coordinates);
         Design.removePawn(coordinates);
         Design.addLightPawn(coordinates, pawn);
+    }
+    
+    private void suggestPawn(Coordinates coordinates) {
+        PawnClass pawn = getPawn(coordinates);
+        Design.removePawn(coordinates);
+        Design.addSuggestedPawn(coordinates, pawn);
     }
 
     private void checkedPawn(Coordinates coordinates) {
@@ -418,6 +435,10 @@ public class Board {
 
     private void lightMove(Coordinates coordinates) {
         Design.addLightMove(coordinates);
+    }
+
+    private void suggestMove(Coordinates coordinates) {
+        Design.addSuggestedMove(coordinates);
     }
 
     private void unLightSelect(Coordinates coordinates) {

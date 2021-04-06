@@ -127,7 +127,7 @@ public class Computer {
     }
 
     private Coordinates choosePawnHard() {
-        int minNumber = -1000;
+        int bestPoint = -1000;
 
         Set<Coordinates> cachePawn = new HashSet<>();
         cachePawn.addAll(possibleKick);
@@ -142,10 +142,10 @@ public class Computer {
             cacheMoves.addAll(moves.getPossibleKick());
             cacheMoves.addAll(moves.getPossibleMoves());
 
-            int point = getMinNumber(cacheMoves, Board.getPawn(coordinates));
+            int point = getBestCoordinatePoint(cacheMoves, Board.getPawn(coordinates), PawnColor.BLACK);
 
-            if(point > minNumber) {
-                minNumber = point;
+            if(point > bestPoint) {
+                bestPoint = point;
             }
         }
 
@@ -161,7 +161,7 @@ public class Computer {
 
                 int point = boardPoint.calculateBoard();
 
-                if (point == minNumber) {
+                if (point == bestPoint) {
                     cachePossiblePawn.add(coordinates);
                 }
 
@@ -214,31 +214,41 @@ public class Computer {
         PawnClass pawn = Board.getPawn(coordinates);
         PawnMoves moves = new PawnMoves(pawn, coordinates);
 
-        Set<Coordinates> possibleMove = new HashSet<>();
-        possibleMove.addAll(moves.getPossibleMoves());
-        possibleMove.addAll(moves.getPossibleKick());
+        return suggestMove(moves.getPossibleMoves(), moves.getPossibleKick(), pawn);
+    }
 
-        Set<Coordinates> listWithOnlyMinNumber = getListWithOnlyMinNumber(possibleMove, pawn);
+    public Coordinates suggestMove(Set<Coordinates> possibleMoves, Set<Coordinates> possibleKick, PawnClass actualPawn){
+        
+        possibleKickAndNotIsEnemyKickMe.clear();
 
-        listWithOnlyMinNumber.forEach(entry -> checkEnemyKickField(entry, pawn));
+        Set<Coordinates> allPossibleActs = new HashSet<>();
+        allPossibleActs.addAll(possibleMoves);
+        allPossibleActs.addAll(possibleKick);
+
+        if (allPossibleActs.size() == 0)
+            return null;
+            
+        Set<Coordinates> listWithBestCoordinates = getListOfBestCoordinates(allPossibleActs, actualPawn, actualPawn.getColor());
+
+        listWithBestCoordinates.forEach(entry -> checkEnemyKickField(entry, actualPawn));
 
         if(possibleKickAndNotIsEnemyKickMe.size() > 0) {
             return selectRandom(possibleKickAndNotIsEnemyKickMe);
         } else {
-            return selectRandom(listWithOnlyMinNumber);
+            return selectRandom(listWithBestCoordinates);
         }
     }
 
-    private int getMinNumber(Set<Coordinates> list, PawnClass actualPawn) {
-        int minNumber = -10000;
+    private int getBestCoordinatePoint(Set<Coordinates> list, PawnClass actualPawn, PawnColor color) {
+        int bestPoint = (color == PawnColor.BLACK) ? -10000 : 10000;
 
         for(Coordinates coordinates : list) {
             PawnClass oldPawn = Board.addPawnWithoutDesign(coordinates, actualPawn);
 
             int point = boardPoint.calculateBoard();
 
-            if(point > minNumber) {
-                minNumber = point;
+            if(point > bestPoint && color == PawnColor.BLACK || point < bestPoint && color == PawnColor.WHITE) {
+                bestPoint = point;
             }
 
             Board.removePawnWithoutDesign(coordinates);
@@ -248,11 +258,11 @@ public class Computer {
             }
         }
 
-        return minNumber;
+        return bestPoint;
     }
 
-    private Set<Coordinates> getListWithOnlyMinNumber(Set<Coordinates> list, PawnClass actualPawn) {
-        int minNumber = getMinNumber(list, actualPawn);
+    private Set<Coordinates> getListOfBestCoordinates(Set<Coordinates> list, PawnClass actualPawn, PawnColor color) {
+        int bestPoint = getBestCoordinatePoint(list, actualPawn, color);
         Set<Coordinates> returnList = new HashSet<>();
 
         for(Coordinates coordinates : list) {
@@ -260,7 +270,7 @@ public class Computer {
 
             int point = boardPoint.calculateBoard();
 
-            if(point == minNumber) {
+            if(point == bestPoint) {
                 returnList.add(coordinates);
             }
 

@@ -25,6 +25,7 @@ public class Design {
     private static TextArea textArea = new TextArea();
     private HBox hBox = new HBox();
     private static Image lightMove = new Image(Resources.getPath("light.png"));
+    private static Image suggestedMove = new Image(Resources.getPath("suggested.png"));
 
     public Design() {
         createBoardBackground();
@@ -115,12 +116,20 @@ public class Design {
         gridPane.add(pawn.getLightImage(), coordinates.getX(), coordinates.getY());
     }
 
+    public static void addSuggestedPawn(Coordinates coordinates, PawnClass pawn) {
+        gridPane.add(pawn.getSuggestedImage(), coordinates.getX(), coordinates.getY());
+    }
+
     public static void addCheckedPawn(Coordinates coordinates, PawnClass pawn) {
         gridPane.add(pawn.getCheckedImage(), coordinates.getX(), coordinates.getY());
     }
 
     public static void addLightMove(Coordinates coordinates) {
         gridPane.add(new ImageView(lightMove), coordinates.getX(), coordinates.getY());
+    }
+    
+    public static void addSuggestedMove(Coordinates coordinates) {
+        gridPane.add(new ImageView(suggestedMove), coordinates.getX(), coordinates.getY());
     }
 
     public static void removePawn(Coordinates coordinates) {
