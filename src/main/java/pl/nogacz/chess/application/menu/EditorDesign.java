@@ -87,6 +87,10 @@ public class EditorDesign {
         addPiece(new PawnClass(Pawn.KNIGHT, PawnColor.BLACK),1,4);
         addPiece(new PawnClass(Pawn.PAWN, PawnColor.BLACK),1,5);
         piecesPane.setHgap(0.1);
+        Button reset = new Button("Reset");
+        reset.setMaxSize(1000,1000);
+        piecesPane.add(reset,0,6,2,1);
+        VBox.setMargin(piecesPane, new Insets(15, 15, 0, 0));
         vBox.getChildren().add(piecesPane);
     }
 
