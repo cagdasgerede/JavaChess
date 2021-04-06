@@ -116,6 +116,10 @@ public class Design {
         gridPane.add(pawn.getLightImage(), coordinates.getX(), coordinates.getY());
     }
 
+    public static void addSuggestedPawn(Coordinates coordinates, PawnClass pawn) {
+        gridPane.add(pawn.getSuggestedImage(), coordinates.getX(), coordinates.getY());
+    }
+
     public static void addCheckedPawn(Coordinates coordinates, PawnClass pawn) {
         gridPane.add(pawn.getCheckedImage(), coordinates.getX(), coordinates.getY());
     }
