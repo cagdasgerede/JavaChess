@@ -214,19 +214,19 @@ public class Computer {
         PawnClass pawn = Board.getPawn(coordinates);
         PawnMoves moves = new PawnMoves(pawn, coordinates);
 
-        return suggestMove(moves.getPossibleMoves(), moes.getPossibleKick(), pawn);
+        return suggestMove(moves.getPossibleMoves(), moves.getPossibleKick(), pawn);
     }
 
     public Coordinates suggestMove(Set<Coordinates> possibleMoves, Set<Coordinates> possibleKick, PawnClass actualPawn){
         possibleKickAndNotIsEnemyKickMe.clear();
-        
+
         Set<Coordinates> allPossibleActs = new HashSet<>();
         allPossibleActs.addAll(possibleMoves);
         allPossibleActs.addAll(possibleKick);
 
-        Set<Coordinates> listWithBestCoordinates = getListOfBestCoordinates(possibleMove, pawn, pawn.getColor());
+        Set<Coordinates> listWithBestCoordinates = getListOfBestCoordinates(allPossibleActs, actualPawn, actualPawn.getColor());
 
-        listWithBestCoordinates.forEach(entry -> checkEnemyKickField(entry, pawn));
+        listWithBestCoordinates.forEach(entry -> checkEnemyKickField(entry, actualPawn));
 
         if(possibleKickAndNotIsEnemyKickMe.size() > 0) {
             return selectRandom(possibleKickAndNotIsEnemyKickMe);
