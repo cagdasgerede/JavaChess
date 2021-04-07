@@ -2,22 +2,28 @@ package pl.nogacz.chess.application.menu;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import pl.nogacz.chess.board.Board;
 
 public class BoardEditor {
-    public EditorDesign editorDesign;
-    public Board editorBoard;
-    public BoardEditor(){
-        editorBoard = new Board();
-        editorDesign = new EditorDesign();
-        Scene editorScene = new Scene(editorDesign.getBorderPane(), 900, 790, Color.BLACK);
-        editorDesign.getGridPane().setOnMouseClicked(event -> editorBoard.readMouseEvent(event));
-        //editorScene.setOnKeyReleased(event -> editorBoard.readKeyboard(event));
-        Stage editorStage = new Stage();
+    Scene oldScene;
+    Scene editorScene;
+    Stage stage;
+    public BoardEditor(Stage stage, Scene oldScene){
+        this.stage = stage;
+        this.oldScene = oldScene;
+        EditorDesign editorDesign = new EditorDesign(this);
+        editorScene = new Scene(editorDesign.getBorderPane(),900,790,Color.BLACK);
+    }
+    public void switchToEditor() {
+        stage.setTitle("Board Editor");
+        stage.setResizable(false);
+        stage.setScene(editorScene);
+        stage.show();
+    }
+    public void returnToMain(){
+        stage.setTitle("JavaChess");
+        stage.setResizable(false);
+        stage.setScene(oldScene);
+        stage.show();
 
-        editorStage.setTitle("JavaChess");
-        editorStage.setScene(editorScene);
-        editorStage.setResizable(false);
-        editorStage.show();
     }
 }

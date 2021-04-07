@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import pl.nogacz.chess.application.Design;
 import pl.nogacz.chess.application.Resources;
 import pl.nogacz.chess.application.menu.AuthorInfo;
+import pl.nogacz.chess.application.menu.EditorDesign;
 import pl.nogacz.chess.board.Board;
 
 /**
