@@ -92,4 +92,60 @@ public class GameLogicTest {
         //Then
         Assert.assertEquals(false, isMovePossible);
     }
+
+
+    @PrepareForTest({Board.class})
+    @Test
+    public void isDefaultGameModeComputerVsPlayer() { // check if default game mode is true
+        //Given
+        PowerMockito.mockStatic(Board.class);
+        GameLogic gameLogic = new GameLogic();
+
+        //When
+        PowerMockito.when(Board.isGameModePlayervsPlayer()).thenReturn(false); // default game mode is player vs computer
+        boolean isDefaultGameModeTrue = Board.isGameModePlayervsPlayer();
+
+        //Then 
+        Assert.assertEquals(false, isDefaultGameModeTrue);
+    }
+
+
+    @PrepareForTest({Board.class})
+    @Test
+    public void isGameModeSuccessfullyChangedToPlayerVsPlayer() { // check if this method can successfully changed the value.
+        //Given
+        PowerMockito.mockStatic(Board.class);
+        GameLogic gameLogic = new GameLogic();
+
+        //When
+        Board.changeModePlayerVsPlayer();
+        boolean isGameModeChangedToPlayerVsPlayer = Board.isGameModePlayervsPlayer();
+
+        //Then
+        Assert.assertEquals(false, isGameModeChangedToPlayerVsPlayer);
+
+    }
+
+
+
+    @PrepareForTest({Board.class})
+    @Test
+    public void isGameModeSuccessfullyChangedToPlayerVsComputer() { // check if this method can successfully changed the value.
+         //Given
+         PowerMockito.mockStatic(Board.class);
+         GameLogic gameLogic = new GameLogic();
+ 
+         //When
+         Board.changeModeComputerVsPlayer();
+         boolean isGameModeChangedToComputerVsPlayer = Board.isGameModePlayervsPlayer();
+ 
+         //Then
+         Assert.assertEquals(false, isGameModeChangedToComputerVsPlayer);
+
+
+    }
+
+
+
+
 }

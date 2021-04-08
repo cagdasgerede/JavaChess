@@ -118,6 +118,9 @@ public class Board {
         isPlayerVsPlayer = false;
     }
 
+    public static boolean isGameModePlayervsPlayer(){ // for test cases
+        return isPlayerVsPlayer;
+    }
 
     public void readMouseEvent(MouseEvent event) {
 
@@ -379,7 +382,7 @@ public class Board {
     }
 
 
-    
+
     public void readKeyboard(KeyEvent event) {
         if(event.getCode().equals(KeyCode.R) || event.getCode().equals(KeyCode.N)) {
             new EndGame("").newGame();
