@@ -22,7 +22,7 @@ public class Difficulty {
         alert.getButtonTypes().setAll(easy, normal, hard);
 
         Optional<ButtonType> result = alert.showAndWait();
-
+        
         if (result.get() == easy){
             Board.setComputerSkill(1);
         } else if (result.get() == hard){
@@ -30,5 +30,6 @@ public class Difficulty {
         } else {
             Board.setComputerSkill(0);
         }
+        
     }
 }
