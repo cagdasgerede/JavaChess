@@ -80,8 +80,8 @@ public class Board {
         board.put(new Coordinates(0,0), new PawnClass(Pawn.ROOK, PawnColor.BLACK));
         board.put(new Coordinates(1,0), new PawnClass(Pawn.KNIGHT, PawnColor.BLACK));
         board.put(new Coordinates(2,0), new PawnClass(Pawn.BISHOP, PawnColor.BLACK));
-        board.put(new Coordinates(3,0), new PawnClass(Pawn.KING, PawnColor.BLACK));
-        board.put(new Coordinates(4,0), new PawnClass(Pawn.QUEEN, PawnColor.BLACK));
+        board.put(new Coordinates(3,0), new PawnClass(Pawn.QUEEN, PawnColor.BLACK));
+        board.put(new Coordinates(4,0), new PawnClass(Pawn.KING, PawnColor.BLACK));
         board.put(new Coordinates(5,0), new PawnClass(Pawn.BISHOP, PawnColor.BLACK));
         board.put(new Coordinates(6,0), new PawnClass(Pawn.KNIGHT, PawnColor.BLACK));
         board.put(new Coordinates(7,0), new PawnClass(Pawn.ROOK, PawnColor.BLACK));
@@ -151,6 +151,7 @@ public class Board {
 
                     checkPromote(eventCoordinates, 0);
 
+                    Design.evaluationBar.draw(); // Re-prints the evaluation bar
                     computerMove();
                 } else if(isFieldNotNull(eventCoordinates) && Board.getPawn(eventCoordinates).getColor().isWhite() && isPossibleSelect(eventCoordinates, PawnColor.WHITE)) {
                     possibleMovePromote.clear();
@@ -213,6 +214,7 @@ public class Board {
                         Coordinates moveCoordinates = computer.selectRandom(possibleKick);
                         unLightSelect(selectedCoordinates);
                         movePawn(selectedCoordinates, moveCoordinates);
+                        Design.evaluationBar.draw(); // Re-prints the evaluation bar
 
                         chessNotation.addMovement(selectedCoordinates, moveCoordinates, getPawn(moveCoordinates), possibleKick.contains(moveCoordinates));
 
@@ -221,6 +223,7 @@ public class Board {
                         Coordinates moveCoordinates = computer.selectRandom(possibleMoves);
                         unLightSelect(selectedCoordinates);
                         movePawn(selectedCoordinates, moveCoordinates);
+                        Design.evaluationBar.draw(); // Re-prints the evaluation bar
 
                         chessNotation.addMovement(selectedCoordinates, moveCoordinates, getPawn(moveCoordinates), false);
 
@@ -235,6 +238,7 @@ public class Board {
                     Coordinates moveCoordinates = computer.chooseMove(selectedCoordinates);
                     unLightSelect(selectedCoordinates);
                     movePawn(selectedCoordinates, moveCoordinates);
+                    Design.evaluationBar.draw(); // Re-prints the evaluation bar
 
                     chessNotation.addMovement(selectedCoordinates, moveCoordinates, getPawn(moveCoordinates), possibleKick.contains(moveCoordinates));
 

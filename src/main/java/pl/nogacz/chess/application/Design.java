@@ -8,10 +8,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import pl.nogacz.chess.application.menu.AuthorInfo;
-import pl.nogacz.chess.application.menu.Difficulty;
-import pl.nogacz.chess.application.menu.EndGame;
-import pl.nogacz.chess.application.menu.Statistics;
+import pl.nogacz.chess.application.menu.*;
 import pl.nogacz.chess.board.Coordinates;
 import pl.nogacz.chess.pawns.PawnClass;
 
@@ -22,6 +19,7 @@ public class Design {
     private static BorderPane borderPane = new BorderPane();
     private static GridPane gridPane = new GridPane();
     private VBox vBox = new VBox();
+    public static EvaluationBar evaluationBar = new EvaluationBar();
     private static TextArea textArea = new TextArea();
     private HBox hBox = new HBox();
     private static Image lightMove = new Image(Resources.getPath("light.png"));
@@ -33,6 +31,7 @@ public class Design {
         createTopMenu();
 
         borderPane.setCenter(gridPane);
+        borderPane.setLeft(evaluationBar);
         borderPane.setRight(vBox);
         borderPane.setTop(hBox);
     }
