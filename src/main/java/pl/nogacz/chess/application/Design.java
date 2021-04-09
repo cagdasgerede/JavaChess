@@ -15,6 +15,13 @@ import pl.nogacz.chess.application.menu.Statistics;
 import pl.nogacz.chess.board.Coordinates;
 import pl.nogacz.chess.pawns.PawnClass;
 
+
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+import javax.sound.sampled.*;
+
 /**
  * @author Dawid Nogacz on 01.05.2019
  */
@@ -130,4 +137,5 @@ public class Design {
     public static void setTextInTextArea(String text) {
         textArea.setText(text);
     }
+    
 }
