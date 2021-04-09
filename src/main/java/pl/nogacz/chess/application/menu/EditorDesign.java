@@ -10,6 +10,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import pl.nogacz.chess.board.Board;
 import pl.nogacz.chess.board.Coordinates;
 import pl.nogacz.chess.pawns.Pawn;
 import pl.nogacz.chess.pawns.PawnClass;
@@ -85,13 +86,13 @@ public class EditorDesign {
         resetBtn.setPrefSize(155,20);
         resetBtn.setOnMouseClicked(e -> {parent.clearSelections(); parent.clearBoard();});
 
-        importBtn = new Button("Import this board");        //TODO
+        importBtn = new Button("Import this board");
         importBtn.setPrefSize(155,10);
-        //importBtn.setOnMouseClicked();                    //TODO: import
+        importBtn.setOnMouseClicked(e -> Board.importBoard(parent.getBoard()));
 
         closeBtn = new Button("Close");
         closeBtn.setPrefSize(155,20);
-        closeBtn.setOnMouseClicked(e -> parent.returnToMain());
+        closeBtn.setOnMouseClicked(e -> BoardEditor.returnToMain());
 
         hBox.getChildren().addAll(resetBtn,importBtn,closeBtn);
     }

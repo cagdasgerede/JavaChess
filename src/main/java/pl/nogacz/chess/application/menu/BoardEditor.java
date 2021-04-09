@@ -8,40 +8,41 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import pl.nogacz.chess.application.Resources;
+import pl.nogacz.chess.board.Board;
 import pl.nogacz.chess.board.Coordinates;
 import pl.nogacz.chess.pawns.Pawn;
 import pl.nogacz.chess.pawns.PawnClass;
 import pl.nogacz.chess.pawns.PawnColor;
 
 public class BoardEditor {
-    private Scene oldScene;
-    private Scene editorScene;
-    private Stage stage;
+    private static Scene primaryScene;
+    private static Scene editorScene;
+    private static Stage stage;
     private PawnClass currSelection;
     private EditorDesign editorDesign;
     private int lastX = -1, lastY = -1;
 
     private HashMap<Coordinates, PawnClass> editorBoard = new HashMap<>();
 
-    public BoardEditor(Stage stage, Scene oldScene){
-        this.stage = stage;
-        this.oldScene = oldScene;
+    public BoardEditor(Stage currStage, Scene oldScene){
+        stage = currStage;
+        primaryScene = oldScene;
         editorDesign = new EditorDesign(this);
         editorDesign.getGridPane().setOnMouseClicked(event -> readMouseEvent(event));
         editorDesign.getPickerPane().setOnMouseClicked(event -> readPickerMouseEvent(event));
         editorScene = new Scene(editorDesign.getBorderPane(),900,790,Color.BLACK);
     }
-    public void switchToEditor() {
+    public static void switchToEditor() {
         stage.setTitle("Board Editor");
         stage.setResizable(false);
         stage.setScene(editorScene);
         stage.show();
     }
 
-    public void returnToMain() {
+    public static void returnToMain() {
         stage.setTitle("JavaChess");
         stage.setResizable(false);
-        stage.setScene(oldScene);
+        stage.setScene(primaryScene);
         stage.show();
     }
 
@@ -72,6 +73,14 @@ public class BoardEditor {
     public void clearBoard(){
         editorBoard.clear();
         EditorDesign.clear();
+    }
+
+    public HashMap<Coordinates,PawnClass> getBoard() {
+        return this.editorBoard;
+    }
+
+    public void setBoard(HashMap<Coordinates,PawnClass> board) {
+        this.editorBoard = board;
     }
 
     public void readPickerMouseEvent(MouseEvent event) {
@@ -142,7 +151,6 @@ public class BoardEditor {
             case 4:
                 currSelection = new PawnClass(Pawn.KNIGHT, pickerX == 0 ? PawnColor.WHITE : PawnColor.BLACK);
                 if (lastX == pickerX && lastY == pickerY ){ // deselect
-                    System.out.println("deselecting");
                     EditorDesign.removePickerPawn(pickerX, pickerY);
                     editorDesign.getPickerPane().add(currSelection.getImage(), pickerX, pickerY);
                     currSelection = null;

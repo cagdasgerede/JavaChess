@@ -144,6 +144,10 @@ public class Design {
         gridPane.getChildren().removeIf(node -> GridPane.getColumnIndex(node) == coordinates.getX() && GridPane.getRowIndex(node) == coordinates.getY());
     }
 
+    public static void clear(){
+        gridPane.getChildren().clear();
+    }
+
     public static void setTextInTextArea(String text) {
         textArea.setText(text);
     }
