@@ -35,3 +35,22 @@ gradle build
 gradle run
 
 ```
+
+## Game Musics
+
+```
+
+background.wav(2019-04-26-tranquility-wwwfesliyanstudioscom_EXOC82ix.wav) 
+from https://www.fesliyanstudios.com/royalty-free-music/downloads-c/peaceful-and-relaxing-music/22
+
+win.wav(Mess Call - USAF Heritage of America Band.wav) from
+from https://studio.youtube.com/channel/UCWp7gGcR-o1F5F_M27zCWKQ/music
+
+lose.wav(Into the Depths (Sting) - Jingle Punks.wav) 
+from https://studio.youtube.com/channel/UCWp7gGcR-o1F5F_M27zCWKQ/music
+
+move.wav(21.wav) 
+from https://freesound.org/people/edwin_p_manchester/sounds/3241/
+
+```
+

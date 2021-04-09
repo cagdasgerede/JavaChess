@@ -20,6 +20,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+import javax.sound.sampled.*;
+
 /**
  * @author Dawid Nogacz on 01.05.2019
  */
@@ -283,8 +288,23 @@ public class Board {
     private void noMovePossibleInfo() {
         switch(gameLogic.getWinner()) {
             case DRAW_COLOR: { statistics.addGameDraw(); endGame("Draw. Maybe you try again?"); break; }
-            case WHITE: { statistics.addGameWin(); endGame("You win! Congratulations! :)"); break; }
-            case BLACK: { statistics.addGameLoss(); endGame("You loss. Maybe you try again?"); break; }
+            case WHITE: {
+                try{winMusic();}
+                 catch(Exception e){System.out.println(e);}  
+                 statistics.addGameWin();   
+                 
+
+                 endGame("You win! Congratulations! :)");                                        
+                 break;
+            }
+            case BLACK: { 
+                try{loseMusic();}
+                 catch(Exception e){System.out.println(e);}
+                statistics.addGameLoss(); 
+                endGame("You loss. Maybe you try again?"); 
+               
+                break;           
+            }
         }
     }
 
@@ -376,6 +396,13 @@ public class Board {
 
         board.remove(oldCoordinates);
         board.put(newCoordinates, pawn);
+        try{
+            moveSound();
+
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
     }
 
     private void lightSelect(Coordinates coordinates) {
@@ -441,4 +468,30 @@ public class Board {
     private void unLightMove(Coordinates coordinates) {
         Design.removePawn(coordinates);
     }
+    public static void moveSound() throws UnsupportedAudioFileException,IOException,LineUnavailableException{
+        
+        File file =new File(".\\src\\main\\resources\\move.wav");
+        AudioInputStream audioStream= AudioSystem.getAudioInputStream(file);
+        Clip clip =AudioSystem.getClip();
+        clip.open(audioStream);
+        clip.start();
+        
+    }
+    public static void winMusic() throws UnsupportedAudioFileException,IOException,LineUnavailableException{
+      
+        File file =new File(".\\src\\main\\resources\\win.wav");
+        AudioInputStream audioStream= AudioSystem.getAudioInputStream(file);
+        Clip clip =AudioSystem.getClip();
+        clip.open(audioStream);     
+        clip.start();
+    }
+    public static void loseMusic() throws UnsupportedAudioFileException,IOException,LineUnavailableException{
+        
+        File file =new File(".\\src\\main\\resources\\lose.wav");
+        AudioInputStream audioStream= AudioSystem.getAudioInputStream(file);
+        Clip clip =AudioSystem.getClip();
+        clip.open(audioStream);     
+        clip.start();
+    }
+    
 }
