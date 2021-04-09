@@ -2,6 +2,6 @@
 .idea
 /build
 .gradle
-.vscode
+.vscode/
 /gameCache
 JavaChess.jar
