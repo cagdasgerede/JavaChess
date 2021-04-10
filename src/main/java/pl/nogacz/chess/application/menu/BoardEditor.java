@@ -28,8 +28,8 @@ public class BoardEditor {
         stage = currStage;
         primaryScene = oldScene;
         editorDesign = new EditorDesign(this);
-        editorDesign.getGridPane().setOnMouseClicked(event -> readMouseEvent(event));
-        editorDesign.getPickerPane().setOnMouseClicked(event -> readPickerMouseEvent(event));
+        editorDesign.getGridPane().setOnMouseClicked(this::readMouseEvent);
+        editorDesign.getPickerPane().setOnMouseClicked(this::readPickerMouseEvent);
         editorScene = new Scene(editorDesign.getBorderPane(),900,790,Color.BLACK);
     }
     public static void switchToEditor() {
