@@ -1,6 +1,10 @@
 /out
+bin/
+.settings/
+.project
 .idea
 /build
 .gradle
+.vscode/
 /gameCache
 JavaChess.jar

@@ -8,10 +8,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 import pl.nogacz.chess.application.menu.AuthorInfo;
 import pl.nogacz.chess.application.menu.Difficulty;
 import pl.nogacz.chess.application.menu.EndGame;
 import pl.nogacz.chess.application.menu.Statistics;
+import pl.nogacz.chess.application.menu.BoardEditor;
 import pl.nogacz.chess.board.Coordinates;
 import pl.nogacz.chess.pawns.PawnClass;
 
@@ -25,6 +27,8 @@ public class Design {
     private static TextArea textArea = new TextArea();
     private HBox hBox = new HBox();
     private static Image lightMove = new Image(Resources.getPath("light.png"));
+    public BoardEditor editor;
+    private boolean firstEditorClick = true;
 
     public Design() {
         createBoardBackground();
@@ -104,7 +108,19 @@ public class Design {
         exitGame.setPrefSize(100, 20);
         exitGame.setOnMouseClicked(event -> System.exit(0));
 
-        hBox.getChildren().addAll(newGame, difficulty, statistics, author, exitGame);
+        Button editorBtn= new Button("Board Editor");
+        editorBtn.setPrefSize(100, 20);
+        editorBtn.setOnMouseClicked(event -> {
+            if (firstEditorClick) {
+                this.editor = new BoardEditor((Stage)textArea.getScene().getWindow(),textArea.getScene());
+                this.editor.switchToEditor();
+                firstEditorClick = false;
+            } else {
+                this.editor.switchToEditor();
+            }
+        });
+
+        hBox.getChildren().addAll(newGame, difficulty, statistics, author, exitGame, editorBtn);
     }
 
     public static void addPawn(Coordinates coordinates, PawnClass pawn) {
@@ -125,6 +141,10 @@ public class Design {
 
     public static void removePawn(Coordinates coordinates) {
         gridPane.getChildren().removeIf(node -> GridPane.getColumnIndex(node) == coordinates.getX() && GridPane.getRowIndex(node) == coordinates.getY());
+    }
+
+    public static void clear(){
+        gridPane.getChildren().clear();
     }
 
     public static void setTextInTextArea(String text) {

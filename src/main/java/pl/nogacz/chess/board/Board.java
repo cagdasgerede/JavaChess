@@ -7,6 +7,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import pl.nogacz.chess.application.*;
+import pl.nogacz.chess.application.menu.BoardEditor;
 import pl.nogacz.chess.application.menu.EndGame;
 import pl.nogacz.chess.application.menu.Statistics;
 import pl.nogacz.chess.pawns.Pawn;
@@ -66,6 +67,15 @@ public class Board {
 
     public static void setBoard(HashMap<Coordinates, PawnClass> board) {
         Board.board = board;
+    }
+
+    public static void importBoard(HashMap<Coordinates, PawnClass> board) {
+        Design.clear();
+        setBoard(board);
+        for(Map.Entry<Coordinates, PawnClass> entry : board.entrySet()) {
+            Design.addPawn(entry.getKey(), entry.getValue());
+        }
+        BoardEditor.returnToMain();
     }
 
     public static void addPossibleMovePromote(Set<Coordinates> coordinates) {
