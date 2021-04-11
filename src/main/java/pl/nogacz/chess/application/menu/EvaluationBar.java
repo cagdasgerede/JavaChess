@@ -8,15 +8,15 @@ import pl.nogacz.chess.application.BoardPoint;
 
 public class EvaluationBar extends VBox {
     private Canvas canvas;
-    private BoardPoint boardPoint = new BoardPoint();
+    private BoardPoint boardPoint;
     private double size;
-    public EvaluationBar(double size) {
+    public EvaluationBar(BoardPoint boardPoint, double size) {
+        this.boardPoint = boardPoint;
         this.size = size;
         setMinSize(20, size);
         setMaxSize(20, size);
         this.canvas = new Canvas(20, size);
         this.getChildren().addAll(canvas);
-        draw();
     }
 
     public void draw() {
