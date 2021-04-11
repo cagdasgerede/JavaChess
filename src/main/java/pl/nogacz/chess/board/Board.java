@@ -122,8 +122,13 @@ public class Board {
         return isPlayerVsPlayer;
     }
 
-    public void readMouseEvent(MouseEvent event) {
+    public static boolean isGameModeComputervsPlayer(){ // for test cases
+        return !(isPlayerVsPlayer);
+    }
 
+
+    
+    public void readMouseEvent(MouseEvent event) {
         if(isPlayerVsPlayer){ // 2 player 
 
 

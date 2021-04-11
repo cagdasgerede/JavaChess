@@ -119,10 +119,11 @@ public class GameLogicTest {
 
         //When
         Board.changeModePlayerVsPlayer();
+        PowerMockito.when(Board.isGameModePlayervsPlayer()).thenReturn(true);
         boolean isGameModeChangedToPlayerVsPlayer = Board.isGameModePlayervsPlayer();
 
         //Then
-        Assert.assertEquals(false, isGameModeChangedToPlayerVsPlayer);
+        Assert.assertEquals(true, isGameModeChangedToPlayerVsPlayer);
 
     }
 
@@ -137,10 +138,11 @@ public class GameLogicTest {
  
          //When
          Board.changeModeComputerVsPlayer();
-         boolean isGameModeChangedToComputerVsPlayer = Board.isGameModePlayervsPlayer();
+         PowerMockito.when(Board.isGameModeComputervsPlayer()).thenReturn(true);
+         boolean isGameModeChangedToComputerVsPlayer = Board.isGameModeComputervsPlayer();
  
          //Then
-         Assert.assertEquals(false, isGameModeChangedToComputerVsPlayer);
+         Assert.assertEquals(true, isGameModeChangedToComputerVsPlayer);
 
 
     }
