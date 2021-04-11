@@ -14,6 +14,7 @@ import pl.nogacz.chess.pawns.PawnClass;
 import pl.nogacz.chess.pawns.PawnColor;
 import pl.nogacz.chess.pawns.PawnPromote;
 import pl.nogacz.chess.pawns.moves.PawnMoves;
+import sun.security.krb5.internal.crypto.Des;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -58,6 +59,7 @@ public class Board {
         } else {
             addStartPawn();
         }
+        Design.evaluationBar.draw(); // Initially calculates the score and prints the evaluation bar
     }
 
     public static HashMap<Coordinates, PawnClass> getBoard() {
@@ -80,7 +82,7 @@ public class Board {
         board.put(new Coordinates(0,0), new PawnClass(Pawn.ROOK, PawnColor.BLACK));
         board.put(new Coordinates(1,0), new PawnClass(Pawn.KNIGHT, PawnColor.BLACK));
         board.put(new Coordinates(2,0), new PawnClass(Pawn.BISHOP, PawnColor.BLACK));
-        board.put(new Coordinates(3,0), new PawnClass(Pawn.QUEEN, PawnColor.BLACK));
+        //board.put(new Coordinates(3,0), new PawnClass(Pawn.QUEEN, PawnColor.BLACK));
         board.put(new Coordinates(4,0), new PawnClass(Pawn.KING, PawnColor.BLACK));
         board.put(new Coordinates(5,0), new PawnClass(Pawn.BISHOP, PawnColor.BLACK));
         board.put(new Coordinates(6,0), new PawnClass(Pawn.KNIGHT, PawnColor.BLACK));

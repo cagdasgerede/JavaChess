@@ -20,14 +20,21 @@ public class EvaluationBar extends VBox {
     public void draw() {
         GraphicsContext g = this.canvas.getGraphicsContext2D();
 
-        int currentScore = boardPoint.calculateBoard() * 10;
+        double currentScore = calculateScoreOverSize(750);
 
         g.setFill(Color.BLACK);
-        g.fillRect(0, 0, 20, 375 + currentScore); // Bar length: 400
+        g.fillRect(0, 0, 20, 375 + currentScore);
 
         g.setFill(Color.WHITE);
         g.fillRect(0, 375 + currentScore, 20, 750 - (375 + currentScore));
 
+        System.out.println(boardPoint.calculateBoard());
+
     }
 
+    public double calculateScoreOverSize(double size) {
+        double currentScore = size * 0.025 * boardPoint.calculateBoard();
+        if (currentScore < -1 * (size / 2.0)) return -1 * (size / 2.0); // Bar does not exceed the boundaries on check
+        else return Math.min((size / 2.0), currentScore); // Bar does not exceed the boundaries on check
+    }
 }
