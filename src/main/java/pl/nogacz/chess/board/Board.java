@@ -9,12 +9,12 @@ import javafx.scene.input.MouseEvent;
 import pl.nogacz.chess.application.*;
 import pl.nogacz.chess.application.menu.EndGame;
 import pl.nogacz.chess.application.menu.Statistics;
+import pl.nogacz.chess.application.menu.Undo;
 import pl.nogacz.chess.pawns.Pawn;
 import pl.nogacz.chess.pawns.PawnClass;
 import pl.nogacz.chess.pawns.PawnColor;
 import pl.nogacz.chess.pawns.PawnPromote;
 import pl.nogacz.chess.pawns.moves.PawnMoves;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -80,8 +80,8 @@ public class Board {
         board.put(new Coordinates(0,0), new PawnClass(Pawn.ROOK, PawnColor.BLACK));
         board.put(new Coordinates(1,0), new PawnClass(Pawn.KNIGHT, PawnColor.BLACK));
         board.put(new Coordinates(2,0), new PawnClass(Pawn.BISHOP, PawnColor.BLACK));
-        board.put(new Coordinates(3,0), new PawnClass(Pawn.KING, PawnColor.BLACK));
-        board.put(new Coordinates(4,0), new PawnClass(Pawn.QUEEN, PawnColor.BLACK));
+        board.put(new Coordinates(4,0), new PawnClass(Pawn.KING, PawnColor.BLACK));
+        board.put(new Coordinates(3,0), new PawnClass(Pawn.QUEEN, PawnColor.BLACK));
         board.put(new Coordinates(5,0), new PawnClass(Pawn.BISHOP, PawnColor.BLACK));
         board.put(new Coordinates(6,0), new PawnClass(Pawn.KNIGHT, PawnColor.BLACK));
         board.put(new Coordinates(7,0), new PawnClass(Pawn.ROOK, PawnColor.BLACK));
@@ -368,14 +368,50 @@ public class Board {
         board.remove(coordinates);
     }
 
-    private void movePawn(Coordinates oldCoordinates, Coordinates newCoordinates) {
+    private static void movePawn(Coordinates oldCoordinates, Coordinates newCoordinates) {
         PawnClass pawn = getPawn(oldCoordinates);
+        if (getPawn(newCoordinates) != null){
+            ChessNotation.addToEaten(getPawn(newCoordinates));
+        }
         Design.removePawn(oldCoordinates);
         Design.removePawn(newCoordinates);
         Design.addPawn(newCoordinates, pawn);
 
         board.remove(oldCoordinates);
         board.put(newCoordinates, pawn);
+    }
+    public static void undo(Coordinates oldCoordinates, Coordinates newCoordinates ){
+
+        PawnClass pawn = getPawn(oldCoordinates);
+        if (pawn.getColor() == PawnColor.BLACK && Undo.isPawnComputer && oldCoordinates.getY() == 7){
+            Design.removePawn(oldCoordinates);
+            Design.removePawn(newCoordinates);
+            Design.addPawn(newCoordinates,new PawnClass(Pawn.PAWN, PawnColor.BLACK));
+            board.remove(oldCoordinates);
+            board.put(newCoordinates,new PawnClass(Pawn.PAWN, PawnColor.BLACK));
+            Undo.isPawnComputer=true;
+        }
+        else if (pawn.getColor() == PawnColor.WHITE && Undo.isPawnPlayer &&oldCoordinates.getY() == 0){
+            Design.removePawn(oldCoordinates);
+            Design.removePawn(newCoordinates);
+            Design.addPawn(newCoordinates,new PawnClass(Pawn.PAWN, PawnColor.WHITE));
+            board.remove(oldCoordinates);
+            board.put(newCoordinates,new PawnClass(Pawn.PAWN, PawnColor.WHITE));
+            Undo.isPawnPlayer=true;
+        }
+        else {
+            Design.removePawn(oldCoordinates);
+            Design.removePawn(newCoordinates);
+            Design.addPawn(newCoordinates, pawn);
+            board.remove(oldCoordinates);
+            board.put(newCoordinates, pawn);
+        }
+    }
+    public static void undo(Coordinates present,PawnClass piece){
+        Design.removePawn(present);
+        board.remove(present);
+        Design.addPawn(present,piece);
+        board.put(present,piece);
     }
 
     private void lightSelect(Coordinates coordinates) {
@@ -441,4 +477,5 @@ public class Board {
     private void unLightMove(Coordinates coordinates) {
         Design.removePawn(coordinates);
     }
+
 }

@@ -12,12 +12,16 @@ import java.util.List;
  */
 public class ChessNotation implements Serializable {
     private static List<String> movesList = new ArrayList<>();
+    private static List<PawnClass> eaten = new ArrayList<>();
 
     private String playerMove = "";
     private String computerMove = "";
 
     public static List<String> getMovesList() {
         return movesList;
+    }
+    public static List<PawnClass> getEatenList() {
+        return eaten;
     }
 
     public static void setMovesList(List<String> movesList) {
@@ -101,5 +105,18 @@ public class ChessNotation implements Serializable {
         } else {
             return "";
         }
+    }
+    public static void addToEaten(PawnClass piece){
+        eaten.add(piece);
+    }
+
+    public static PawnClass removeFromEaten(List<PawnClass> eaten){
+        return eaten.remove(eaten.size()-1);
+    }
+
+    public static String removeFromMovesList( List<String> movesList){
+        String x =movesList.remove(movesList.size()-1);
+        updateTextArea();
+        return x;
     }
 }
