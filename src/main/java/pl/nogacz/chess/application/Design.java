@@ -8,10 +8,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import pl.nogacz.chess.application.menu.AuthorInfo;
-import pl.nogacz.chess.application.menu.Difficulty;
-import pl.nogacz.chess.application.menu.EndGame;
-import pl.nogacz.chess.application.menu.Statistics;
+import pl.nogacz.chess.application.menu.*;
 import pl.nogacz.chess.board.Coordinates;
 import pl.nogacz.chess.pawns.PawnClass;
 
@@ -104,7 +101,11 @@ public class Design {
         exitGame.setPrefSize(100, 20);
         exitGame.setOnMouseClicked(event -> System.exit(0));
 
-        hBox.getChildren().addAll(newGame, difficulty, statistics, author, exitGame);
+        Button undo = new Button("Undo");
+        undo.setPrefSize(100, 20);
+        undo.setOnMouseClicked(event -> new Undo());
+
+        hBox.getChildren().addAll(newGame, difficulty, statistics, author, exitGame, undo);
     }
 
     public static void addPawn(Coordinates coordinates, PawnClass pawn) {
