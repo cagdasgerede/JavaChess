@@ -24,7 +24,7 @@ import java.util.Set;
  * @author Dawid Nogacz on 01.05.2019
  */
 public class Board {
-    private SaveGame saveGame = new SaveGame();
+    private SaveGame cSaveGame = new SaveGame();
     private ChessNotation chessNotation = new ChessNotation();
     private Statistics statistics = new Statistics();
 
@@ -49,15 +49,7 @@ public class Board {
     private Set<Coordinates> possiblePawnIfKingIsChecked = new HashSet<>();
 
     public Board() {
-        if(saveGame.isSave()) {
-            saveGame.load();
-
-            for(Map.Entry<Coordinates, PawnClass> entry : board.entrySet()) {
-                Design.addPawn(entry.getKey(), entry.getValue());
-            }
-        } else {
-            addStartPawn();
-        }
+        addStartPawn();
     }
 
     public static HashMap<Coordinates, PawnClass> getBoard() {
@@ -104,6 +96,19 @@ public class Board {
             Design.addPawn(entry.getKey(), entry.getValue());
         }
     }
+
+    public static void redesignBoard(){
+        for(Map.Entry<Coordinates, PawnClass> entry : board.entrySet()) {
+            Design.addPawn(entry.getKey(), entry.getValue());
+        }
+    }
+
+    public static void clearBoard(){
+        for(Map.Entry<Coordinates, PawnClass> entry : board.entrySet()) {
+            Design.removePawn(entry.getKey());
+        }
+    }
+
 
     public void readMouseEvent(MouseEvent event) {
         if(isComputerRound || isGameEnd) {
@@ -188,7 +193,7 @@ public class Board {
     }
 
     public static void setComputerSkill(int skill) {
-        computer.setSkill(skill);
+        Computer.setSkill(skill);
     }
 
     private void computerMove() {
@@ -244,7 +249,7 @@ public class Board {
                 isComputerRound = false;
                 selectedCoordinates = null;
                 chessNotation.saveRound();
-                saveGame.save();
+                //saveGame.save();
             }
         });
 
