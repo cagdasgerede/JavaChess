@@ -19,7 +19,7 @@ public class Design {
     private static BorderPane borderPane = new BorderPane();
     private static GridPane gridPane = new GridPane();
     private VBox vBox = new VBox();
-    public static EvaluationBar evaluationBar = new EvaluationBar(750);
+    public static EvaluationBar evaluationBar = new EvaluationBar(new BoardPoint(), 750);
     private static TextArea textArea = new TextArea();
     private HBox hBox = new HBox();
     private static Image lightMove = new Image(Resources.getPath("light.png"));
