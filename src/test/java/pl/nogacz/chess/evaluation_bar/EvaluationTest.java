@@ -24,7 +24,7 @@ public class EvaluationTest {
     @Test
     public void doesCalculateThePointTrueWhenPointIsEqual() {
         //Given
-        PowerMockito.mockStatic(EvaluationBar.class);
+        PowerMockito.mockStatic(Board.class);
 
         HashMap<Coordinates, PawnClass> board = new HashMap<>();
 
@@ -104,7 +104,7 @@ public class EvaluationTest {
         //When
         PowerMockito.when(Board.getBoard()).thenReturn(board);
 
-        boolean isBlackWinning = (0 < evaluationBar.calculateScoreOverSize());
+        boolean isBlackWinning = (evaluationBar.calculateScoreOverSize() < 0);
 
         //Then
         Assert.assertTrue(isBlackWinning);
