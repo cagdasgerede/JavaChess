@@ -4,16 +4,13 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import pl.nogacz.chess.application.BoardPoint;
 import pl.nogacz.chess.application.menu.EvaluationBar;
 
 @RunWith(PowerMockRunner.class)
 public class EvaluationTest {
-    EvaluationBar evaluationBar = new EvaluationBar(750);
 
-    @PrepareForTest({BoardPoint.class})
     @Test
     public void doesCalculateThePointTrueWhenPointIsEqual() {
         //Given
@@ -21,12 +18,12 @@ public class EvaluationTest {
 
         //When
         PowerMockito.when(boardPoint.calculateBoard()).thenReturn(0);
+        EvaluationBar evaluationBar = new EvaluationBar(boardPoint, 750);
 
         //Then
         Assert.assertEquals(0, evaluationBar.calculateScoreOverSize(), 0);
     }
 
-    @PrepareForTest({BoardPoint.class})
     @Test
     public void doesCalculateThePointTrueWhenWhiteIsWinning() {
         //Given
@@ -34,6 +31,7 @@ public class EvaluationTest {
 
         //When
         PowerMockito.when(boardPoint.calculateBoard()).thenReturn(-5);
+        EvaluationBar evaluationBar = new EvaluationBar(boardPoint, 750);
 
         boolean isWhiteWinning = (evaluationBar.calculateScoreOverSize() < 0);
 
@@ -41,7 +39,6 @@ public class EvaluationTest {
         Assert.assertTrue(isWhiteWinning);
     }
 
-    @PrepareForTest({BoardPoint.class})
     @Test
     public void doesCalculateThePointTrueWhenBlackIsWinning() {
         //Given
@@ -49,6 +46,7 @@ public class EvaluationTest {
 
         //When
         PowerMockito.when(boardPoint.calculateBoard()).thenReturn(5);
+        EvaluationBar evaluationBar = new EvaluationBar(boardPoint, 750);
 
         boolean isBlackWinning = (0 < evaluationBar.calculateScoreOverSize());
 
@@ -56,7 +54,6 @@ public class EvaluationTest {
         Assert.assertTrue(isBlackWinning);
     }
 
-    @PrepareForTest({BoardPoint.class})
     @Test
     public void isInLowBoundaryWhenTheScoreExceeds() {
         //Given
@@ -64,12 +61,12 @@ public class EvaluationTest {
 
         //When
         PowerMockito.when(boardPoint.calculateBoard()).thenReturn(-500);
+        EvaluationBar evaluationBar = new EvaluationBar(boardPoint, 750);
 
         //Then
         Assert.assertEquals(-375, evaluationBar.calculateScoreOverSize(), 0);
     }
 
-    @PrepareForTest({BoardPoint.class})
     @Test
     public void isInHighBoundaryWhenTheScoreExceeds() {
         //Given
@@ -77,6 +74,7 @@ public class EvaluationTest {
 
         //When
         PowerMockito.when(boardPoint.calculateBoard()).thenReturn(500);
+        EvaluationBar evaluationBar = new EvaluationBar(boardPoint, 750);
 
         //Then
         Assert.assertEquals(375, evaluationBar.calculateScoreOverSize(), 0);
