@@ -39,7 +39,6 @@ public class EvaluationTest {
 
         //Then
         Assert.assertTrue(isWhiteWinning);
-
     }
 
     @PrepareForTest({BoardPoint.class})
@@ -55,7 +54,6 @@ public class EvaluationTest {
 
         //Then
         Assert.assertTrue(isBlackWinning);
-
     }
 
     @PrepareForTest({BoardPoint.class})
@@ -69,7 +67,6 @@ public class EvaluationTest {
 
         //Then
         Assert.assertEquals(-375, evaluationBar.calculateScoreOverSize(), 0);
-
     }
 
     @PrepareForTest({BoardPoint.class})
@@ -83,7 +80,6 @@ public class EvaluationTest {
 
         //Then
         Assert.assertEquals(375, evaluationBar.calculateScoreOverSize(), 0);
-
     }
 
 }
