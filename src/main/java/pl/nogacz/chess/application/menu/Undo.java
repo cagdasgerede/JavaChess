@@ -16,6 +16,8 @@ public class Undo {
         boolean didCEat=false;
         boolean didPEat=false;
         if (ChessNotation.getMovesList().size()!=0) {
+            isPawnPlayer=true;
+            isPawnComputer=true;
             String lastMove = ChessNotation.removeFromMovesList(ChessNotation.getMovesList());
             String playerMove = lastMove.substring(0, lastMove.indexOf(" "));
             String computerMove = lastMove.substring(lastMove.indexOf(" ") + 1);

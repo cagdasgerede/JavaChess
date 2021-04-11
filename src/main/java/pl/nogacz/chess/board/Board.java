@@ -386,17 +386,19 @@ public class Board {
         if (pawn.getColor() == PawnColor.BLACK && Undo.isPawnComputer && oldCoordinates.getY() == 7){
             Design.removePawn(oldCoordinates);
             Design.removePawn(newCoordinates);
-            Design.addPawn(newCoordinates,new PawnClass(Pawn.PAWN, PawnColor.BLACK));
+            PawnClass pawn1 = new PawnClass(Pawn.PAWN,PawnColor.BLACK);
+            Design.addPawn(newCoordinates,pawn1);
             board.remove(oldCoordinates);
-            board.put(newCoordinates,new PawnClass(Pawn.PAWN, PawnColor.BLACK));
+            board.put(newCoordinates,pawn1);
             Undo.isPawnComputer=true;
         }
         else if (pawn.getColor() == PawnColor.WHITE && Undo.isPawnPlayer &&oldCoordinates.getY() == 0){
             Design.removePawn(oldCoordinates);
             Design.removePawn(newCoordinates);
-            Design.addPawn(newCoordinates,new PawnClass(Pawn.PAWN, PawnColor.WHITE));
+            PawnClass pawn1 = new PawnClass(Pawn.PAWN,PawnColor.WHITE);
+            Design.addPawn(newCoordinates,pawn1);
             board.remove(oldCoordinates);
-            board.put(newCoordinates,new PawnClass(Pawn.PAWN, PawnColor.WHITE));
+            board.put(newCoordinates,pawn1);
             Undo.isPawnPlayer=true;
         }
         else {
