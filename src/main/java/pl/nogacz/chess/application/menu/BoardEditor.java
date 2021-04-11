@@ -8,7 +8,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import pl.nogacz.chess.application.Resources;
-import pl.nogacz.chess.board.Board;
 import pl.nogacz.chess.board.Coordinates;
 import pl.nogacz.chess.pawns.Pawn;
 import pl.nogacz.chess.pawns.PawnClass;

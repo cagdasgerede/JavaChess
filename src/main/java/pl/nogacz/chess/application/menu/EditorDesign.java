@@ -1,12 +1,9 @@
 package pl.nogacz.chess.application.menu;
-import java.beans.EventHandler;
 
-import javafx.event.ActionEvent;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -16,7 +13,6 @@ import pl.nogacz.chess.pawns.Pawn;
 import pl.nogacz.chess.pawns.PawnClass;
 import pl.nogacz.chess.pawns.PawnColor;
 import pl.nogacz.chess.application.Resources;
-import javafx.stage.Stage;
 
 public class EditorDesign {
     private static BorderPane borderPane = new BorderPane();

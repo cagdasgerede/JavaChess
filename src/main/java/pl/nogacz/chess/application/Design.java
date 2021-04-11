@@ -9,7 +9,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import pl.nogacz.chess.Chess;
 import pl.nogacz.chess.application.menu.AuthorInfo;
 import pl.nogacz.chess.application.menu.Difficulty;
 import pl.nogacz.chess.application.menu.EndGame;
