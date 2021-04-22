@@ -34,6 +34,11 @@ public class Computer {
         }
     }
 
+    public int getSkill()
+    {
+        return skill;
+    }
+
     private boolean isExists() {
         File tempFile = new File("gameCache/computer.dat");
         return tempFile.exists();
@@ -102,6 +107,7 @@ public class Computer {
         switch (skill) {
             case 1: return choosePawnEasy();
             case 2: return choosePawnHard();
+            case 3: return choosePawnHard();
             default: return choosePawnNormal();
         }
     }
@@ -117,6 +123,16 @@ public class Computer {
     }
 
     private Coordinates choosePawnNormal() {
+        if (possibleKick.size() > 0) {
+            return selectRandom(possibleKick);
+        } else if (possibleMoves.size() > 0) {
+            return selectRandom(possibleMoves);
+        }
+
+        return null;
+    }
+
+    private Coordinates choosePawnInsane() {
         if (possibleKick.size() > 0) {
             return selectRandom(possibleKick);
         } else if (possibleMoves.size() > 0) {
@@ -176,10 +192,13 @@ public class Computer {
         return selectRandom(cachePossiblePawn);
     }
 
+       
+
     public Coordinates chooseMove(Coordinates coordinates) {
         switch (skill) {
             case 1: return chooseMoveEasy(coordinates);
             case 2: return chooseMoveHard(coordinates);
+            case 3: return chooseMoveInsane(coordinates);
             default: return chooseMoveNormal(coordinates);
         }
     }
@@ -227,6 +246,27 @@ public class Computer {
         } else {
             return selectRandom(listWithOnlyMinNumber);
         }
+    }
+    private Coordinates chooseMoveInsane(Coordinates coordinates) {
+        PawnClass pawn = Board.getPawn(coordinates);
+        PawnMoves moves = new PawnMoves(pawn, coordinates);
+        Set<Coordinates> possibleMove = new HashSet<>();
+        possibleMove.addAll(moves.getPossibleMoves());
+        possibleMove.addAll(moves.getPossibleKick());
+
+        Set<Coordinates> listWithOnlyMinNumber = getListWithOnlyMinNumber(possibleMove, pawn);
+
+        listWithOnlyMinNumber.forEach(entry -> checkEnemyKickField(entry, pawn));
+
+        if(possibleKickAndNotIsEnemyKickMe.size() >0)
+        {
+            return selectMoveAlphaBeta(possibleKickAndNotIsEnemyKickMe);
+        }
+        else
+        {
+            return selectMoveAlphaBeta(listWithOnlyMinNumber);
+        }
+               
     }
 
     private int getMinNumber(Set<Coordinates> list, PawnClass actualPawn) {
@@ -300,5 +340,52 @@ public class Computer {
     public Coordinates selectRandom(Set<Coordinates> list) {
         Object[] object = list.toArray();
         return (Coordinates) object[random.nextInt(object.length)];
+    }
+
+    public Coordinates selectMoveAlphaBeta(Set<Coordinates> list)
+    {
+        int bestIndex = alphabetaScoring(list,0,0,true,1000,-1000);
+        Object[] object = list.toArray();
+        return (Coordinates) object[bestIndex];
+    }
+
+    public int alphabetaScoring(Set<Coordinates> list,int depth,int listIndex,boolean isMaximizingPlayer,int alpha,int beta)
+    {
+        if(depth == 10)
+            return listIndex;
+        if(isMaximizingPlayer)
+        {
+            int best = -1000;
+            for(int i =0; i<9; i++)
+            {
+                int value = alphabetaScoring(list,depth+1,listIndex*2+i,false,alpha,beta);
+                best  = Math.max(best,value);
+                alpha = Math.max(alpha,best);
+                
+                if(beta <= alpha)
+                    break;
+
+            }
+            return best;
+
+
+        }
+        else
+        {
+            int best = 1000;
+            for(int i =0; i<9; i++)
+            {
+                int value = alphabetaScoring(list,depth+1,listIndex*2+i,false,alpha,beta);
+                best  = Math.min(best,value);
+                alpha = Math.min(beta,best);
+                
+                if(beta <= alpha)
+                    break;
+
+            }
+            return best;
+
+        }
+        
     }
 }
