@@ -23,6 +23,7 @@ public class Design {
     private static GridPane gridPane = new GridPane();
     private VBox vBox = new VBox();
     private static TextArea textArea = new TextArea();
+    private static TextArea currentLevel = new TextArea();
     private HBox hBox = new HBox();
     private static Image lightMove = new Image(Resources.getPath("light.png"));
 
@@ -30,6 +31,7 @@ public class Design {
         createBoardBackground();
         generateEmptyBoard();
         createFieldForChessNotation();
+        createFieldForGameDiff();
         createTopMenu();
 
         borderPane.setCenter(gridPane);
@@ -83,6 +85,16 @@ public class Design {
         vBox.getChildren().add(textArea);
     }
 
+    private void createFieldForGameDiff() {
+        currentLevel.setEditable(false);
+        currentLevel.setMaxHeight(20);
+        currentLevel.setMaxWidth(100);
+        //currentLevel.setTitle("Current Difficulty");
+        currentLevel.setText("Normal");
+
+        //hBox.getChildren().add(currrentLevel);
+    }
+
     public void createTopMenu() {
         Button newGame = new Button("New game");
         newGame.setPrefSize(100, 20);
@@ -102,9 +114,9 @@ public class Design {
 
         Button exitGame = new Button("Exit game");
         exitGame.setPrefSize(100, 20);
-        exitGame.setOnMouseClicked(event -> System.exit(0));
+        exitGame.setOnMouseClicked(event -> System.exit(0));   
 
-        hBox.getChildren().addAll(newGame, difficulty, statistics, author, exitGame);
+        hBox.getChildren().addAll(newGame, difficulty, statistics, author, exitGame, currentLevel);
     }
 
     public static void addPawn(Coordinates coordinates, PawnClass pawn) {
@@ -129,5 +141,8 @@ public class Design {
 
     public static void setTextInTextArea(String text) {
         textArea.setText(text);
+    }
+    public static void setTextInDifficulty(String text) {
+        currentLevel.setText(text);
     }
 }
