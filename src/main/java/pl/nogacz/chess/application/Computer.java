@@ -34,6 +34,11 @@ public class Computer {
         }
     }
 
+    public int getSkill()
+    {
+        return skill;
+    }
+
     private boolean isExists() {
         File tempFile = new File("gameCache/computer.dat");
         return tempFile.exists();
@@ -102,7 +107,7 @@ public class Computer {
         switch (skill) {
             case 1: return choosePawnEasy();
             case 2: return choosePawnHard();
-            case 3: return choosePawnNormal();
+            case 3: return choosePawnHard();
             default: return choosePawnNormal();
         }
     }
@@ -118,6 +123,16 @@ public class Computer {
     }
 
     private Coordinates choosePawnNormal() {
+        if (possibleKick.size() > 0) {
+            return selectRandom(possibleKick);
+        } else if (possibleMoves.size() > 0) {
+            return selectRandom(possibleMoves);
+        }
+
+        return null;
+    }
+
+    private Coordinates choosePawnInsane() {
         if (possibleKick.size() > 0) {
             return selectRandom(possibleKick);
         } else if (possibleMoves.size() > 0) {
@@ -336,12 +351,12 @@ public class Computer {
 
     public int alphabetaScoring(Set<Coordinates> list,int depth,int listIndex,boolean isMaximizingPlayer,int alpha,int beta)
     {
-        if(depth == 5)
+        if(depth == 10)
             return listIndex;
         if(isMaximizingPlayer)
         {
             int best = -1000;
-            for(int i =0; i<4; i++)
+            for(int i =0; i<9; i++)
             {
                 int value = alphabetaScoring(list,depth+1,listIndex*2+i,false,alpha,beta);
                 best  = Math.max(best,value);
@@ -358,7 +373,7 @@ public class Computer {
         else
         {
             int best = 1000;
-            for(int i =0; i<4; i++)
+            for(int i =0; i<9; i++)
             {
                 int value = alphabetaScoring(list,depth+1,listIndex*2+i,false,alpha,beta);
                 best  = Math.min(best,value);

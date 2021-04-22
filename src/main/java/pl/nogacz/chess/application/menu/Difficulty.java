@@ -49,5 +49,10 @@ public class Difficulty {
 
         Design.setTextInDifficulty(currentLevel);
     }
+
+    public String getDifficultyLevel()
+    {
+        return currentLevel;
+    }
  
 }
